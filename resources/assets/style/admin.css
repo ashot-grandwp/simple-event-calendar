@@ -1,0 +1,648 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url(../fonts/OpenSans-Regular.ttf);
+}
+.updated,.update-nag{
+    display: none !important;
+}
+/* Top Banner Begin  */
+.gd_calendar_top_banner_container{
+    float: right;
+    width: calc(100% - 160px);
+    z-index: 1;
+    position: relative;
+    margin-bottom: 50px;
+}
+.gd_calendar_new_list_header {
+    background: #fff;
+    padding: 20px 0 76px 0;
+}
+#gd_calendar_new {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 16px;
+    text-decoration: none;
+    border: 1px solid #5f7df5;
+    color: #5f7df5;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: all 0.3s;
+    position: absolute;
+    right: 0;
+}
+#gd_calendar_new:hover {
+    background: #5f7df5;
+    color: #fff;
+}
+.taxonomy-event_category h1.wp-heading-inline, .taxonomy-event_tag h1.wp-heading-inline,
+.post-type-gd_events h1.wp-heading-inline, .post-type-gd_calendar h1.wp-heading-inline,
+.post-type-gd_organizers h1.wp-heading-inline, .post-type-gd_venues h1.wp-heading-inline,
+.post-type-gd_events a.page-title-action,.post-type-gd_calendar a.page-title-action,
+.post-type-gd_organizers a.page-title-action,.post-type-gd_venues a.page-title-action
+{
+    display: none;
+}
+.gd_calendar_top_banner{
+    padding: 20px 30px 40px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #23282d;
+    height: 45px;
+}
+.gd_calendar_top_banner span{
+    position: relative;
+    top: 25px;
+    font-size: 40px;
+    left: 120px;
+    line-height: 1;
+}
+.gd_calendar_top_banner ul{
+    float: right;
+    position: relative;
+    top: 20px;
+}
+.gd_calendar_top_banner li{
+    display: inline-block;
+    padding: 0 20px;
+}
+.gd_calendar_top_banner li a{
+    color: #fff;
+    font-family: "Roboto";
+    font-size: 19px;
+    text-decoration: none;
+}
+.gd_calendar_top_banner li:hover:after {
+    content: '';
+    background-color: #fff;
+    display: block;
+    height: 5px;
+    border-radius: 2px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: -20px;
+    width: 50%;
+}
+.gd_calendar_top_banner li:last-child:hover:after {
+    left: inherit;
+}
+.gd_calendar_banner_logo:before{
+    content: url('../images/calendar_logo.png');
+    position: absolute;
+    z-index: 20;
+}
+/* Top Banner End  */
+.venue_box, .new_venue_box {
+    min-height: 320px;
+}
+.venue_info, .event_venue_info {
+    float: left;
+    width: 325px;
+    border-collapse: collapse;
+    margin-right: 80px;
+}
+.event_info, .organizer_info{
+    width: 325px;
+    border-collapse: collapse;
+    margin-right: 80px;
+}
+.gd_calendar_view_type_sidebar{
+    max-width:120px;
+}
+.gd_calendar_view_type_sidebar_checkbox{
+    float: right;
+}
+input[type=tel] {
+    margin-left: 1px !important;
+}
+.venue_field input, .organizer_field input {
+    width: 100%;
+}
+.venue_cost input {
+    width: 60px;
+}
+.venue_info tr td, .organizer_info tr td {
+    height: 30px;
+}
+.venue_info tr td:first-child, .event_date tr td:first-child, .event_venue_info tr td:first-child, .organizer_info tr td:first-child {
+    width: 25%;
+}
+.venue_info tr td:last-child, .event_date tr td:last-child, .event_venue_info tr td:last-child, .organizer_info tr td:last-child {
+    width: 75%;
+}
+.event_date {
+    width: 500px;
+    border-collapse: collapse;
+}
+.post-type-gd_venues #post-body #normal-sortables, .post-type-gd_events #post-body #normal-sortables, .post-type-gd_organizers #post-body #normal-sortables {
+    min-height: 0;
+}
+.type-gd_calendar .featured_image a {
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+.event_field td:nth-child(2){
+    height: 35px;
+}
+.event_field{
+    height: 35px;
+}
+.event_field input, .event_field #timezone{
+    width: 210px;
+    height: 30px;
+}
+.event_field #repeat_type{
+    width: 107px;
+    margin-left: 44px;
+    padding-left: 5px;
+}
+#currency_position{
+    margin-left: 7px;
+}
+#currency{
+    margin-left: 11px;
+}
+.gd_calendar_shortcode_box textarea{
+    width:100%;
+    height:50px;
+    resize:none;
+}
+textarea.gd_calendar_textarea_box{
+    height: 25px;
+    width: 100%;
+    resize:none;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+textarea.gd_calendar_textarea_box:last-child{
+    width: 100%;
+}
+/* Checkbox slider Begin  */
+.all_day_field{
+    height: 40px;
+}
+.repeat_field span{
+    vertical-align: middle;
+}
+#repeat {
+    display: inline;
+}
+#repeat:before{
+    margin: 0;
+    content: none;
+}
+#all_day[type=checkbox], #repeat[type=checkbox], #gd_calendar_view_type_sidebar[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+.gd_calendar_switch_checkbox {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 25px;
+    height: 15px;
+    background: #d4d4d4;
+    display: block;
+    border-radius: 6px;
+    position: relative;
+    top: 9px;
+    float: left;
+}
+.all_day_field .gd_calendar_switch_checkbox, .gd_calendar_view_type_sidebar_checkbox .gd_calendar_switch_checkbox {
+    top: 2px;
+}
+.gd_calendar_switch_checkbox:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 11px;
+    height: 11px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+#all_day:checked + .gd_calendar_switch_checkbox, #repeat:checked + .gd_calendar_switch_checkbox, #gd_calendar_view_type_sidebar:checked + .gd_calendar_switch_checkbox {
+    background: #8dc63f;
+}
+#all_day:checked + .gd_calendar_switch_checkbox:after, #repeat:checked + .gd_calendar_switch_checkbox:after, #gd_calendar_view_type_sidebar:checked + .gd_calendar_switch_checkbox:after {
+    left: calc(100% - 1px);
+    transform: translateX(-100%);
+}
+/* Checkbox slider End  */
+/* Phone input */
+.intl-tel-input {
+    width: 100%;
+}
+#error-msg, .error-msg {
+    color: red;
+}
+#valid-msg {
+    color: #00C900;
+}
+input.error {
+    border: 1px solid #FF7C7C;
+}
+.hide {
+    display: none;
+}
+.event_location {
+    width: 25%;
+}
+.event_organizer {
+    width: 20%;
+}
+.event_location > label, .event_organizer > label {
+    float: left;
+    line-height: 28px;
+}
+.event_location > label {
+    width: 24%;
+}
+.event_organizer > label {
+    width: 29%;
+}
+.event_venue {
+    width: 70%;
+}
+.event_back, .event_block_edit, #repeat_day, #repeat_week, #repeat_month, #repeat_year {
+    display: none;
+}
+.venue_save, .organizer_save {
+    float: right;
+}
+.checkboxes_container{
+    max-height: 109px;
+    overflow-y: auto;
+    width: 150px;
+    min-height: 22px;
+}
+#gd_calendar_select{
+    width: 100%;
+}
+/* Coming Soon Begin*/
+.coming_soon{
+    background-image:url('../images/comingsoon.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    font-family: "Open Sans";
+    position: fixed;
+    width: 100%;
+}
+.coming_soon h1{
+    color: #fff;
+    font-size: 90px;
+    margin: 0;
+    padding-top: 215px;
+    font-weight: 400;
+}
+.coming_soon h3{
+    font-size: 30px;
+    text-transform: uppercase;
+    padding-top: 55px;
+    padding-bottom: 30px;
+    color: #fff;
+}
+.coming_soon .gd_social {
+    margin: 0 0 70px;
+}
+.coming_soon form.subscribe_form {
+    box-sizing: border-box;
+    margin: 0 0 75px;
+    display: inline-flex;
+    overflow: hidden;
+    text-align: center;
+}
+.coming_soon form.subscribe_form input[type=text] {
+    border-radius: 30px;
+    font-family: 'Open Sans', sans-serif;
+    width: 300px;
+    margin-right: 4%;
+}
+.coming_soon form.subscribe_form .error {
+    color: red;
+}
+.coming_soon form.subscribe_form label.error {
+    display: none!important;
+}
+.coming_soon form.subscribe_form input[type=submit] {
+    color: #fff;
+    float: right;
+    cursor: pointer;
+    padding: 20px 30px;
+    border-radius: 30px;
+    background-color: #2e5aef;
+    width: 229px;
+}
+.coming_soon form.subscribe_form input {
+    margin: 0;
+    outline: 0;
+    border: 0;
+    float: left;
+    font-size: 18px;
+    padding: 20px 25px;
+    box-sizing: content-box;
+}
+.grandwp_tw, .grandwp_fb, .grandwp_youtube {
+    margin-right: 30px;
+}
+.grandwp_tw, .grandwp_fb, .grandwp_youtube, .grandwp_gplus,
+.grandwp_tw:focus, .grandwp_tw:active,
+.grandwp_fb:focus, .grandwp_fb:active,
+.grandwp_youtube:focus, .grandwp_youtube:active,
+.grandwp_gplus:focus, .grandwp_gplus:active{
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+}
+.coming_soon .contact_us {
+    font-size: 18px;
+    padding: 15px 40px;
+    display: inline-block;
+    margin: 0 0 265px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+}
+
+.coming_soon .contact_us:hover {
+    background-color: #2e5aef;
+    border: 2px solid transparent;
+}
+.contact {
+    position: fixed;
+    display: none;
+    overflow: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(27,31,35,.95);
+}
+.contact .form {
+    width: 520px;
+    text-align: center;
+    padding: 40px;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    margin: 100px auto;
+    transition: transform .2s ease-in-out;
+}
+.contact .form .col {
+    width: 205px;
+    margin: 0 0 30px;
+    display: inline-block;
+    float: left;
+}
+.contact .form .col.last {
+    float: right;
+}
+.contact .form textarea {
+    height: 175px;
+    padding: 20px;
+}
+.contact .form input, .contact .form textarea {
+    padding: 15px 20px;
+    margin: 0;
+    outline: 0;
+    width: 100%;
+    background: #f9f9f9;
+    border: 3px solid #e0e0e0;
+    font-size: 18px;
+    font-family: Helvetica Neue,Arial,sans-serif;
+    box-sizing: border-box;
+    resize: none;
+    border-radius: 5px;
+}
+.contact label.error {
+    color: red;
+    float: left;
+    font-size: 11px;
+    padding-top: 10px;
+}
+.contact .form .submit{
+    margin: 30px 0 0;
+    text-align: center;
+    clear: left;
+}
+.contact .form .submit input {
+    cursor: pointer;
+    display: inline-block;
+    background: #2e5aef;
+    color: #fff;
+    border: 0;
+    padding: 20px 45px;
+    width: 230px;
+    border-radius: 30px;
+}
+.response{
+    color: #000;
+    font-size: 15px;
+}
+@media all and (max-width: 960px){
+    .gd_calendar_top_banner_container{
+        width: calc(100% - 36px);
+    }
+}
+@media all and (max-width: 782px){
+    .gd_calendar_top_banner_container{
+        width: 100%;
+    }
+}
+/* Coming Soon End */
+/* Featured Plugin Begin */
+.gd_calendar_featured_box{
+    display: block;
+}
+.gd_calendar_featured_lightbox, .gd_calendar_featured_forms{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.gd_calendar_featured_lightbox .gd_calendar_plugin_image{
+    background: url("../images/grandwp_lightbox.png") no-repeat;
+    min-width: 312px;
+    min-height: 312px;
+}
+.gd_calendar_featured_forms .gd_calendar_plugin_image{
+    background: url("../images/grandwp_forms.png") no-repeat;
+    min-width: 312px;
+    height: 312px;
+}
+.gd_calendar_about_plugin{
+    border: 1px solid #eeeeee;
+    background-color: #f6f6f6;
+    max-width: 624px;
+}
+.gd_calendar_plugin_title{
+    color: #252525;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 40px 0 0 40px;
+}
+.gd_calendar_plugin_text{
+    padding: 20px 40px;
+    text-align: justify;
+    color: #505050;
+    font-size: 15px;
+    font-weight: 400;
+}
+.gd_calendar_plugin_buttons{
+    text-align: center;
+}
+.gd_calendar_plugin_buttons a{
+    display: inline-block;
+    font-size: 15px;
+    padding: 15px 25px;
+    border-radius: 50px;
+    margin: 0 15px;
+    text-decoration: none;
+}
+.gd_calendar_plugin_buttons a:first-child{
+    border: 1px solid #2e5aef ;
+    background: #fff;
+    color: #2e5aef ;
+}
+.gd_calendar_plugin_buttons a:last-child{
+    border: 1px solid #2e5aef ;
+    background: #2e5aef ;
+    color: #fff;
+}
+@media all and (max-width: 1024px){
+    .gd_calendar_plugin_title{
+        padding: 25px 0 0 40px;
+    }
+    .gd_calendar_plugin_text{
+        padding: 15px 40px;
+    }
+    .gd_calendar_plugin_buttons a{
+        padding: 8px 25px;
+    }
+}
+@media all and (max-width: 768px){
+    .gd_calendar_featured_lightbox, .gd_calendar_featured_forms{
+        display: block;
+    }
+    .gd_calendar_about_plugin{
+        min-height: 250px;
+        width: 100%;
+        max-width: none;
+    }
+    .gd_calendar_featured_lightbox .gd_calendar_plugin_image,
+    .gd_calendar_featured_forms .gd_calendar_plugin_image{
+        background-position: center center;
+        margin-bottom: 10px;
+    }
+    .gd_calendar_plugin_buttons{
+        margin-bottom: 10px;
+    }
+}
+/* Featured Plugin End */
+/* Ask user for review Begin */
+.gd_calendar_review_notice{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: #fff;
+    justify-content: space-between;
+    padding: 0 0 0 15px;
+    border-radius: 0px;
+    box-sizing: border-box;
+    margin: 0;
+    overflow: hidden;
+}
+.gd_calendar_review_notice img{
+    vertical-align: middle;
+}
+.gd_calendar_first_col{
+    flex-grow: 1;
+    text-align: center;
+}
+.gd_calendar_second_col{
+    flex-grow: 3;
+    text-align: center;
+    padding: 2px 30px 0;
+}
+.gd_calebdar_third_col{
+    flex-grow: 1;
+    text-align: right;
+}
+.gd_calendar_second_col>div:first-child {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.gd_calendar_second_col>div:nth-child(2) {
+    font-size: 14px;
+    margin-top: 10px;
+}
+.gd_calendar_second_col>div:nth-child(3) ul{
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+.gd_calendar_second_col>div:nth-child(3) ul li{
+    display: inline-block;
+}
+.gd_calendar_second_col>div:nth-child(3) a{
+    display: inline-block;
+    padding: 4px 15px;
+    color: #fff;
+    background: #2e5aef;
+    margin: 0 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+/* Ask user for review End */
+/* Theme, Post, Page Section Begin */
+.gd_calendar_section_switch {
+    display: flex;
+    margin: 0px;
+    padding: 36px 162px 0 30px;
+    background-color: #FFF;
+    width: 89%;
+    float: left;
+}
+.gd_calendar_section_switch li {
+    margin: 0;
+    padding: 10px 15px;
+}
+.gd_calendar_section_switch li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    box-shadow: none;
+}
+li.gd_calendar_active_section {
+    background-color: #f1f1f1;
+    border: 2px solid #e9ebf3;
+    border-bottom: 0px;
+    position: relative;
+    bottom: -2px;
+    padding: 5px 15px 15px 15px;
+}
+.gd_calendar_section_edit_name {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.gd_calendar_edit_section_name_input {
+    background: none !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    position: relative;
+    bottom: 8px;
+}
+.gd_calendar_hidden {
+    display: none !important;
+}
+/* Theme, Post, Page Section End */
