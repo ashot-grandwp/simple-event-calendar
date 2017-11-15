@@ -4,6 +4,7 @@ namespace GDCalendar\Models\PostTypes;
 
 use GDCalendar\Core\Validator;
 use GDCalendar\Core\PostTypeModel;
+use GDCalendar\Helpers\Builders\CalendarBuilder;
 
 class Event extends PostTypeModel
 {
@@ -25,6 +26,11 @@ class Event extends PostTypeModel
      * @var string
      */
     protected $end_date;
+
+	/**
+	 * @var array
+	 */
+    protected $date_range = array();
 
     /**
      * @var string
@@ -106,13 +112,17 @@ class Event extends PostTypeModel
         'currency',
         'currency_position',
         'event_venue',
-        'event_organizer'
+        'event_organizer',
+	    'date_range'
     );
 
     public function __construct($id = null)
     {
         parent::__construct($id);
         $this->event_organizer = $this->get_meta_value('organizer');
+	    if($this->get_start_date() != null && $this->get_end_date() != null){
+	        $this->date_range[] = CalendarBuilder::eventDateRange($this->get_start_date(), $this->get_end_date());
+        }
     }
 
     /**
@@ -157,6 +167,13 @@ class Event extends PostTypeModel
         }
         $this->end_date = sanitize_text_field($end_date);
         return $this;
+    }
+
+	/**
+	 * @return array
+	 */
+    public function get_date_range(){
+    	return $this->date_range;
     }
 
     /**
@@ -237,7 +254,7 @@ class Event extends PostTypeModel
 
     public function get_repeat_day()
     {
-        return $this->repeat_day;
+        return intval($this->repeat_day);
     }
 
     /**

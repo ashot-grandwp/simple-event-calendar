@@ -32,7 +32,7 @@ abstract class PostTypeModel
     protected static $meta_keys;
 
     /**
-     * PostTypeModel constructor.
+     * PostTypeModel constructor
      * @param null $id
      * @throws \Exception
      */

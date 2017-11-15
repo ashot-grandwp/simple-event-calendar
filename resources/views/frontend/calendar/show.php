@@ -1,15 +1,17 @@
 <?php
 /**
- * @var $show Calendar Builder
+ * @var $show \GDCalendar\Helpers\Builders\CalendarBuilder
  */
     $day = false;
     $week = false;
     $month = false;
     $year = false;
 
-    $id = $show->get_post_id();
+    $id = $show->getPostId();
     $calendar = new \GDCalendar\Models\PostTypes\Calendar($id);
     $views = $calendar->get_view_type();
+
+    $theme = $calendar->get_theme();
 
     if(!empty($views)){
 	    foreach ($views as $view){
@@ -42,7 +44,10 @@
 
 	    if(true === $month){
 	        $type = 'month';
-		    $show_view = \GDCalendar\Helpers\View::buffer('frontend/calendar/month.php', array('month' => $show));
+		    $show_view = \GDCalendar\Helpers\View::buffer('frontend/calendar/month.php', array(
+		            'builder' => $show,
+                    )
+            );
 		    $month_active = 'gd_calendar_active_view';
         }
         else{
@@ -66,7 +71,7 @@
             }
         }
 ?>
-    <div class="gd_calendar_wrapper gd_calendar_body">
+    <div id="gd_calendar_wrapper_<?php echo $id; ?>" class="gd_calendar_wrapper gd_calendar_body gd_calendar_theme_<?php echo $theme;?>">
         <?php
         if(has_post_thumbnail()){ ?>
             <div class="event_thumbnail">
@@ -78,7 +83,7 @@
             <form action="" method="get" name="search" id="search">
             <div class="gd_calendar_bar">
                 <div class="gd_calendar_event_box_filter">
-                    <input type="text" name="gd_calendar_month_event_filter" id="gd_calendar_month_event_filter" value="<?php if(isset($_GET['gd_calendar_month_event_filter'])){echo sanitize_text_field($_GET['gd_calendar_month_event_filter']);} ?>" placeholder="<?php _e("Date", "gd-calendar"); ?>" />
+                    <input type="text" name="gd_calendar_month_event_filter" class="gd_calendar_month_event_filter gd_calendar_datepicker" id="gd_calendar_month_event_filter_<?php echo $id; ?>" value="<?php if(isset($_GET['gd_calendar_month_event_filter'])){echo sanitize_text_field($_GET['gd_calendar_month_event_filter']);} ?>" placeholder="<?php _e("Date", "gd-calendar"); ?>" />
                     <input type="hidden" id="date_holder" />
                     <input type="hidden" id="post_id" value="<?php echo $id; ?>" />
                 </div>

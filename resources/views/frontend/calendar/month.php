@@ -1,30 +1,31 @@
 <?php
 /**
  * Calendar Month View (Main)
- * @var $month
+ * @var $builder \GDCalendar\Helpers\Builders\MonthCalendarBuilder
  */
-$calendar_id = $month->get_post_id();
+$calendar_id = $builder->getPostId();
 
-$dateComponents = $month->get_date_components();
+$dateComponents = $builder->getDateComponents();
 $currentMonthName = $dateComponents['month'];
 // What is the index value (0-6) of the first day of the month
 $dayOfWeek = $dateComponents['wday'];
 
-$lastDateComponents = $month->get_last_date_components();
+$lastDateComponents = $builder->getLastDateComponents();
 // What is last month number of days
 $lastDayOfMonth = $lastDateComponents['mday'];
 
-$nextDateComponents = $month->get_next_date_components();
+$nextDateComponents = $builder->getNextDateComponents();
 $nextMonthName = $nextDateComponents['month'];
 
 $lastMonth = str_pad($lastDateComponents['mon'], 2, "0", STR_PAD_LEFT);
-$currentMonth = str_pad($month->get_month(), 2, "0", STR_PAD_LEFT);
+$currentMonth = str_pad($builder->getMonth(), 2, "0", STR_PAD_LEFT);
 $nextMonth = str_pad($nextDateComponents['mon'], 2, "0", STR_PAD_LEFT);
 
 $weekend_bg = 'gd_calendar_weekend_bg';
 $gd_calendar_day_light = 'gd_calendar_day_light';
 
-    if(isset($_GET['search']) && !empty($_GET['search']) && empty($month->get_searched_event())){
+
+    if(isset($_GET['search']) && $_GET['search'] == true && $builder->getSearchedEvent() == false){
         ?>
         <div class="gd_calendar_message">
         <?php
@@ -32,21 +33,20 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
         </div>
     <?php
     }
-
 ?>
     <table class='gd_calendar_table'>
         <tr><?php
             // calendar day of week
-            $currentWeek = $month->get_weekday();
+            $currentWeek = $builder->getWeekday();
 
-            foreach($month->get_days_of_week() as $key => $day) {
+            foreach($builder->getDaysOfWeek() as $key => $day) {
                 $weekday_color = "";
                 if($key == 0 || $key == 6){
                     $weekday_color = "gd_calendar_weekday";
                 }
 
-                $selectedDate = $month->get_year() . '-' . $currentMonth;
-                $restOfCurrentDate = substr($month->get_current_date(), 0, 7);
+                $selectedDate = $builder->getYear() . '-' . $currentMonth;
+                $restOfCurrentDate = substr($builder->getCurrentDate(), 0, 7);
                 $currentWeekFont = "";
                 if ($selectedDate == $restOfCurrentDate){
                     if($key == $currentWeek) {
@@ -67,9 +67,9 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
                 $lastDays = $lastDayOfMonth - $dayOfWeek + 1;
                 while($lastMonthDay <= $dayOfWeek)
                 {
-                    $lastYear = $month->get_year();
-                    if($month->get_month() == 1){
-                        $lastYear = $month->get_year() - 1;
+                    $lastYear = $builder->getYear();
+                    if($builder->getMonth() == 1){
+                        $lastYear = $builder->getYear() - 1;
                     }
 
                     $lastDayRel = str_pad($lastDays, 2, "0", STR_PAD_LEFT);
@@ -79,9 +79,10 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
                         <p class="<?php echo $gd_calendar_day_light; ?>"><?php echo $lastDays; ?></p>
                         <?php
                         \GDCalendar\Helpers\View::render('frontend/calendar/events.php', array(
-                            'searched_event' => $month->get_searched_event(),
+                            'searched_event' => $builder->getSearchedEvent(),
                             'date' => $date,
-                            'calendar_id' => $calendar_id
+                            'builder' => $builder,
+                            'calendar_id' => $calendar_id,
                         ));
                         ?>
                     </td>
@@ -93,7 +94,7 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
 
             // Current month view
             $currentDay = 1;
-            while ($currentDay <= $month->get_days_count()) {
+            while ($currentDay <= $builder->getDaysCount()) {
             if ($dayOfWeek == 7) {
             $dayOfWeek = 0;
             ?>
@@ -101,9 +102,9 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
             <?php
             }
             $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
-            $date = $month->get_year()."-$currentMonth-$currentDayRel";
+            $date = $builder->getYear()."-$currentMonth-$currentDayRel";
             $current_date = '';
-            if($month->get_current_date() === $date ) {
+            if($builder->getCurrentDate() === $date ) {
                 $current_date = 'gd_calendar_current_date';
             }
             ?>
@@ -111,9 +112,10 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
                 <p class="<?php echo ($currentDay != 1) ? $current_date : 'gd_calendar_first_day'; ?>"><?php if($currentDay == 1){ echo substr($currentMonthName, 0, 3) . " ";} echo $currentDay; ?></p>
                 <?php
                 \GDCalendar\Helpers\View::render('frontend/calendar/events.php', array(
-                    'searched_event' => $month->get_searched_event(),
+                    'searched_event' => $builder->getSearchedEvent(),
                     'date' => $date,
-                    'calendar_id' => $calendar_id
+                    'builder' => $builder,
+                    'calendar_id' => $calendar_id,
                 ));
                 ?>
             </td>
@@ -131,10 +133,10 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
                 while($nextMonthDay <= $remainingDays)
                 {
                     $nextDayRel = str_pad($nextMonthDay, 2, "0", STR_PAD_LEFT);
-                    $nextYear = $month->get_year();
+                    $nextYear = $builder->getYear();
 
-                    if($month->get_month() == 12){
-                        $nextYear = $month->get_year() + 1;
+                    if($builder->getMonth() == 12){
+                        $nextYear = $builder->getYear() + 1;
                     }
 
                     $date = $nextYear ."-$nextMonth-$nextDayRel";
@@ -143,9 +145,10 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
                         <p class="<?php echo $gd_calendar_day_light; ?>"><?php if($nextMonthDay == 1){ echo substr($nextMonthName, 0, 3) . " ";} echo $nextMonthDay; ?></p>
                         <?php
                         \GDCalendar\Helpers\View::render('frontend/calendar/events.php', array(
-                            'searched_event' => $month->get_searched_event(),
+                            'searched_event' => $builder->getSearchedEvent(),
                             'date' => $date,
-                            'calendar_id' => $calendar_id
+                            'builder' => $builder,
+                            'calendar_id' => $calendar_id,
                         ));
                         ?>
                     </td>

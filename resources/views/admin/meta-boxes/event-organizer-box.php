@@ -59,6 +59,7 @@
             <td><?php _e('Email', 'gd-calendar'); ?></td>
             <td>
                 <input type="email" id="organizer_email" name="organizer_email">
+                <span class="error-msg error-email-org hide"><?php _e('Not a valid email address', 'gd-calendar'); ?></span>
             </td>
         </tr>
         <tr class="organizer_field">

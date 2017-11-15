@@ -1,5 +1,17 @@
 "use strict";
 
+/**
+ *  Remove Parameter from URL when error required field
+ */
+function removeUrlParameter() {
+    var location = window.location.href;
+
+    if (location.indexOf("&wp-post-new-reload=true") !== -1){
+        location = location.replace("&wp-post-new-reload=true", "");
+        window.history.replaceState( null, null, location );
+    }
+}
+
 jQuery( document ).ready(function() {
     /**
      * Settings Checkbox all checked

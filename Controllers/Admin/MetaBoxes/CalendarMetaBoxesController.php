@@ -19,28 +19,28 @@ class CalendarMetaBoxesController
         add_meta_box(
             'gd_calendar_settings_select_box_id',
             'Calendar Settings',
-            array(self::class, 'calendarSettingsSelectBoxView'),
+            array(__CLASS__, 'calendarSettingsSelectBoxView'),
             'gd_calendar'
         );
 
         add_meta_box(
             'gd_calendar_view_box_id',
             __('View', 'gd-calendar'),
-            array(self::class, 'calendarViewBoxView'),
+            array(__CLASS__, 'calendarViewBoxView'),
             'gd_calendar'
         );
 
         add_meta_box(
             'gd_calendar_theme_box_id',
             __('Theme', 'gd-calendar'),
-            array(self::class, 'calendarThemeBoxView'),
+            array(__CLASS__, 'calendarThemeBoxView'),
             'gd_calendar'
         );
 
 	    add_meta_box(
 		    'gd_calendar_sidebar_box_id',
 		    __('Usage', 'gd-calendar'),
-		    array(self::class, 'calendarSidebarBoxView'),
+		    array(__CLASS__, 'calendarSidebarBoxView'),
 		    'gd_calendar',
 		    'side'
 	    );

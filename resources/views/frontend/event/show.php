@@ -43,16 +43,24 @@
         <tr class="event_front_field">
             <td><?php _e('Time', 'gd-calendar'); ?>:</td>
             <td><?php
+
+                $timezone = $event->get_timezone();
+
+                if(substr($timezone, -2) === '.5'){
+	                $last_part = substr($timezone, -2);
+	                $timezone = str_replace($last_part, ':30', $timezone);
+                }
+
                 if ($event->get_all_day() === 'all_day' ) { ?>
                     <span class="all_day">
                     <?php
                         _e('all day', 'gd-calendar');
                     ?>
                     </span>
-                    <?php echo ' (' . $event->get_timezone() . ')'; ?>
+                    <?php echo ' (' . $timezone . ')'; ?>
                 <?php } else {
                     echo date("h:i a", strtotime(esc_html($event->get_start_date()))) . " " . __('to', 'gd-calendar') . " " .
-                         date("h:i a", strtotime(esc_html($event->get_end_date()))) . ' (' . $event->get_timezone() . ')';
+                         date("h:i a", strtotime(esc_html($event->get_end_date()))) . ' (' . $timezone . ')';
                 } ?>
             </td>
         </tr>
@@ -96,7 +104,7 @@
         </tr>
         <tr class="event_front_field">
             <td><?php _e('Location', 'gd-calendar'); ?>:</td>
-            <td class="venue_location_name"><?php if(!empty($venue->get_address())){ echo esc_html($venue->get_address());} ?></td>
+            <td class="venue_location_name"><?php if($venue->get_address() == true){ echo esc_html($venue->get_address());} ?></td>
         </tr>
         <input id="address_view" type="hidden" value="<?php echo esc_html($venue->get_address()); ?>">
     </table>

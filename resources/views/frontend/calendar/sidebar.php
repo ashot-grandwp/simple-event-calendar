@@ -1,25 +1,31 @@
 <?php
 /**
  * Calendar Month Sidebar View
- * @var $sidebar_month
+ * @var $sidebar_month \GDCalendar\Helpers\Builders\MonthCalendarBuilder
  */
+    $calendar_id = $sidebar_month->getPostId();
+    ?>
+<!--    <div class="gd_calendar_sidebar" data-calendar-id="--><?php //echo $calendar_id; ?><!--">-->
+    <?php
 
-$calendar_id = $sidebar_month->get_post_id();
-?>
-<div class="gd_calendar_sidebar" data-calendar-id="<?php echo $calendar_id; ?>">
-<?php
-$sidebar = true;
-$dateComponents = $sidebar_month->get_date_components();
-$currentMonthName = $dateComponents['month'];
-$currentYear = $sidebar_month->get_year();
-$dayOfWeek = $dateComponents['wday'];
-$currentMonth = str_pad($sidebar_month->get_month(), 2, "0", STR_PAD_LEFT);
-$currentDate = date("m/d/Y", strtotime($sidebar_month->get_current_date()));
-$hold_month = $sidebar_month->get_month() . '/01/' . $sidebar_month->get_year();
+    $sidebar = true;
+    $dateComponents = $sidebar_month->getDateComponents();
+    $currentMonthName = $dateComponents['month'];
+    $currentYear = $sidebar_month->getYear();
+    $dayOfWeek = $dateComponents['wday'];
+    $currentMonth = str_pad($sidebar_month->getMonth(), 2, "0", STR_PAD_LEFT);
 
-$first_week_number = absint($sidebar_month->get_current_weekday_number($sidebar_month->get_year()."-".$currentMonth."-01"));
-$current_week_number = absint($sidebar_month->get_current_weekday_number($currentDate));
-?>
+    $currentDateObj = new DateTime($sidebar_month->getCurrentDate());
+    $currentDate = $currentDateObj->format('m/d/Y');
+    $tomorrowDateObj = new DateTime($sidebar_month->getCurrentDate());
+    $tomorrowDateObj->modify('+1 day');
+    $tomorrowDate = $tomorrowDateObj->format('m/d/Y');
+
+    $hold_month = $sidebar_month->getMonth() . '/01/' . $sidebar_month->getYear();
+
+    $first_week_number = absint($sidebar_month->getCurrentWeekdayNumber($sidebar_month->getYear()."-".$currentMonth."-01"));
+    $current_week_number = absint($sidebar_month->getCurrentWeekdayNumber($currentDate));
+    ?>
     <div class="gd_calendar_small_date" data-date="<?php echo $hold_month; ?>">
         <span><?php echo $currentMonthName; ?></span>
         <span class="current_year_color"><?php echo $currentYear; ?></span>
@@ -31,7 +37,7 @@ $current_week_number = absint($sidebar_month->get_current_weekday_number($curren
     <div class="gd_calendar_small">
         <table class='gd_calendar_small_table'>
             <tr><?php
-                foreach($sidebar_month->get_days_of_week() as $key => $day) {
+                foreach($sidebar_month->getDaysOfWeek() as $key => $day) {
                     ?>
                     <th class='gd_calendar_header_small'><?php echo $day; ?></th>
                     <?php
@@ -41,10 +47,10 @@ $current_week_number = absint($sidebar_month->get_current_weekday_number($curren
                     echo '<td></td>';
                 }
                 $currentDay = 1;
-                while ($currentDay <= $sidebar_month->get_days_count()) {
+                while ($currentDay <= $sidebar_month->getDaysCount()) {
                 $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
-                $date = $sidebar_month->get_year()."-$currentMonth-$currentDayRel";
-                $week_number = absint($sidebar_month->get_current_weekday_number($date));
+                $date = $sidebar_month->getYear()."-$currentMonth-$currentDayRel";
+                $week_number = absint($sidebar_month->getCurrentWeekdayNumber($date));
                 if ($dayOfWeek == 7) {
                 $dayOfWeek = 0;
                 ?>
@@ -52,21 +58,22 @@ $current_week_number = absint($sidebar_month->get_current_weekday_number($curren
                 <?php
                 }
                 $current_date = '';
-                if($sidebar_month->get_current_date() === $date ) {
+                if($sidebar_month->getCurrentDate() === $date ) {
                     $current_date = 'gd_calendar_current_date_small';
                 }
                 ?>
                 <td class='gd_calendar_day_small' rel='<?php echo $date; ?>'>
                     <div class="<?php echo $current_date; ?>">
-                        <p><?php echo $currentDay; ?></p>
-                        <?php
-                        \GDCalendar\Helpers\View::render('frontend/calendar/events.php', array(
-                            'searched_event' => $sidebar_month->get_searched_event(),
-                            'date' => $date,
-                            'sidebar' => $sidebar,
-                            'calendar_id' => $calendar_id
-                        ));
-                        ?>
+                    <p><?php echo $currentDay; ?></p>
+                    <?php
+                    \GDCalendar\Helpers\View::render('frontend/calendar/events.php', array(
+                        'searched_event' => $sidebar_month->getSearchedEvent(),
+                        'date' => $date,
+                        'sidebar' => $sidebar,
+                        'calendar_id' => $calendar_id,
+                        'builder' => $sidebar_month,
+                    ));
+                    ?>
                     </div>
                 </td>
                 <?php

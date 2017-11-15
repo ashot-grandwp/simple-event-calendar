@@ -20,12 +20,17 @@ class AdminController{
 
         add_filter('screen_options_show_screen', array($this, 'remove_screen_options'));
         add_filter('manage_edit-gd_calendar_columns', array(__CLASS__, 'calendarColumns'));
+	    add_action('load-post-new.php',  array(__CLASS__, 'menuStyle') );
         add_action('manage_gd_calendar_posts_custom_column', array($this, 'calendarColumnsData'), 10, 2);
         add_action('save_post', array(__CLASS__, 'setDefaultObjectTerms'), 100, 2);
         new AdminAssetsController();
         new MetaBoxesController();
         new ShortcodeController();
     }
+
+	public static function menuStyle(){
+		echo '<style>#adminmenu .wp-submenu li.wp-first-item a{color: #fff;font-weight: 600;}</style>';
+	}
 
     public function remove_screen_options(){
         global $current_screen;
@@ -45,11 +50,10 @@ class AdminController{
         $page = $current_screen->id;
         $base = $current_screen->base;
 
-        if( $taxnow === '' && $base !== 'edit' ){
-            echo '<style>.wrap h1.wp-heading-inline{display:inline-block;}</style>';
-        }
-
-        if ( in_array($type, $this->Pages) && $page !== 'gd_events_page_gd_events_settings' || $page === 'gd_events_page_gd_events_themes') {
+        if ( $type !== '' && in_array($type, $this->Pages) && $page !== 'gd_events_page_gd_events_settings' || $page === 'gd_events_page_gd_events_themes') {
+	        if( $taxnow === '' && $base !== 'edit' ){
+		        echo '<style>.wrap h1.wp-heading-inline{display:inline-block;}</style>';
+	        }
         ?>
             <div class="gd_calendar_top_banner_container">
             <?php

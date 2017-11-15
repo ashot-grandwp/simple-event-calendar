@@ -42,7 +42,7 @@ class EventsController
         $venue = new Venue($event_venue);
 
         $symbol = '';
-        if (!empty($event->get_cost()) && !empty($event->get_currency())) {
+        if (!is_null($event->get_cost()) && $event->get_currency() !== 'Select Currency' ) {
             $symbol = Currencies::getCurrencySymbol($event->get_currency());
         } else {
             $event->set_cost(__('FREE', 'gd-calendar'));

@@ -18,7 +18,7 @@ class EventMetaBoxesController
         add_meta_box(
             'gd_calendar_event_time_box_id',
             __('General options', 'gd-calendar'),
-            array(self::class, 'eventTime'),
+            array(__CLASS__, 'eventTime'),
             'gd_events',
             'normal',
             'high'
@@ -27,7 +27,7 @@ class EventMetaBoxesController
         add_meta_box(
             'gd_calendar_event_venue_box_id',
             __('Venue', 'gd-calendar'),
-            array(self::class, 'eventVenue'),
+            array(__CLASS__, 'eventVenue'),
             'gd_events',
             'normal',
             'high'
@@ -36,7 +36,7 @@ class EventMetaBoxesController
         add_meta_box(
             'gd_calendar_event_organizer_box_id',
             __('Organizer', 'gd-calendar'),
-            array(self::class, 'eventOrganizer'),
+            array(__CLASS__, 'eventOrganizer'),
             'gd_events',
             'normal',
             'high'

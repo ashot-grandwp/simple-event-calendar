@@ -9,7 +9,7 @@
             separately or in a slideshow, and you can also set the transitions, animations, slideshows’ speed, overlay opacity, etc.', 'gd-calendar'); ?>
             </div>
             <div class="gd_calendar_plugin_buttons">
-                <a href="//en-au.wordpress.org/plugins/responsive-lightbox-popup/" target="_blank"><?php _e('Try Free', 'gd-calendar'); ?></a>
+                <a href="//wordpress.org/plugins/responsive-lightbox-popup/" target="_blank"><?php _e('Try Free', 'gd-calendar'); ?></a>
                 <a href="//demo.grandwp.com/wordpress-responsive-lightbox-demo/" target="_blank"><?php _e('Demo', 'gd-calendar'); ?></a>
             </div>
         </div>

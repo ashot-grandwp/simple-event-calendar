@@ -9,7 +9,9 @@ Author URI: http://grandwp.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: gd-calendar
 Domain Path: /languages
- */
+*/
+
+error_reporting(E_ALL);
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;

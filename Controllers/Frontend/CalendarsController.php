@@ -2,7 +2,7 @@
 
 namespace GDCalendar\Controllers\Frontend;
 
-use GDCalendar\Helpers\CalendarBuilder;
+use GDCalendar\Helpers\Builders\MonthCalendarBuilder;
 use GDCalendar\Models\PostTypes\Calendar;
 
 class CalendarsController
@@ -41,7 +41,7 @@ class CalendarsController
             $year = date('Y');
         }
 
-        $builder = new CalendarBuilder($month, $year, $id);
+        $builder = new MonthCalendarBuilder($month,$year,$id);
         $builder->show();
     }
 
@@ -53,8 +53,19 @@ class CalendarsController
         $month = date('m');
         $year = date('Y');
 
-        $builder = new CalendarBuilder($month, $year, $id);
-        $builder->get_calendar_sidebar();
-    }
+        $builder = new MonthCalendarBuilder($month, $year, $id);
 
+        $calendar = new Calendar($id);
+	    $theme_id = $calendar->get_theme();
+
+        ?>
+	    <div id="gd_calendar_wrapper_widget_<?php echo $id; ?>" class="gd_calendar_wrapper gd_calendar_theme_<?php echo $theme_id;?>">
+		    <div class="gd_calendar_sidebar" data-calendar-id="<?php echo $id; ?>">
+		    <?php
+	        $builder->getCalendarSidebar();
+	        ?>
+		    </div>
+	    </div>
+	    <?php
+    }
 }

@@ -22,7 +22,7 @@ class OrganizerMetaBoxesController
         add_meta_box(
             'gd_organizer_box_id',
             __('Organizers', 'gd-calendar'),
-            array(self::class, 'organizerBox'),
+            array(__CLASS__, 'organizerBox'),
             'gd_organizers',
             'normal',
             'high'

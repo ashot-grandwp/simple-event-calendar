@@ -16,15 +16,16 @@
     <tr class="event_field">
         <td><?php _e('Start', 'gd-calendar'); ?></td>
         <td colspan="3">
-            <div><input type="text" id="start_date" name="start_date" value="<?php if(!empty($event->get_start_date()) && ( \GDCalendar\Core\Validator::validateDate($event->get_start_date()) == true)) echo $event->get_start_date(); ?>"></div>
+            <div><input type="text" id="start_date" name="start_date" value="<?php if(($event->get_start_date() == true) && ( \GDCalendar\Core\Validator::validateDate($event->get_start_date()) == true)) echo $event->get_start_date(); ?>"></div>
             <span class="error-msg error-start hide"><?php _e('Please fill start date', 'gd-calendar'); ?></span>
         </td>
     </tr>
     <tr class="event_field">
         <td><?php _e('End', 'gd-calendar'); ?></td>
         <td colspan="3">
-            <div><input type="text" id="end_date" name="end_date" value="<?php if(!empty($event->get_end_date()) && (\GDCalendar\Core\Validator::validateDate($event->get_end_date()) == true)) echo $event->get_end_date(); ?>"></div>
+            <div><input type="text" id="end_date" name="end_date" value="<?php if(($event->get_end_date() == true) && (\GDCalendar\Core\Validator::validateDate($event->get_end_date()) == true)) echo $event->get_end_date(); ?>"></div>
             <span class="error-msg error-end hide"><?php _e('Please fill end date', 'gd-calendar'); ?></span>
+            <span class="error-msg wrong-end hide"><?php _e('Wrong end date given', 'gd-calendar'); ?></span>
         </td>
     </tr>
     </tbody>
@@ -33,7 +34,7 @@
         <td colspan="3">
             <select id="timezone" name="timezone">
                 <?php
-                if(!empty($event->get_timezone())) {
+                if($event->get_timezone() == true) {
                     echo wp_timezone_choice( $event->get_timezone() );
                 }
                 else {
@@ -96,7 +97,7 @@
     <tr class="venue_cost">
         <td><?php _e('Cost', 'gd-calendar'); ?></td>
         <td>
-            <input type="text" id="cost" name="cost" value="<?php if(!empty($event->get_cost())) echo esc_html($event->get_cost()); ?>">
+            <input type="text" id="cost" name="cost" value="<?php if($event->get_cost() == true) echo esc_html($event->get_cost()); ?>">
         </td>
         <td>
             <select name="currency" id="currency">

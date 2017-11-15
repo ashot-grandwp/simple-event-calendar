@@ -36,10 +36,10 @@ jQuery(document).ready(function () {
     var publish = jQuery("#publish");
         publish.on('click', function () {
             if( telInput.val() !== '' && !telInput.intlTelInput("isValidNumber")){
+                removeUrlParameter();
                 return false;
             }
         });
-
 
     /**
      * Phone number allow numeric

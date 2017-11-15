@@ -2,7 +2,8 @@
 
 namespace GDCalendar\Controllers\Frontend;
 
-use GDCalendar\Helpers\CalendarBuilder;
+use GDCalendar\Helpers\Builders\CalendarBuilder;
+use GDCalendar\Helpers\Builders\MonthCalendarBuilder;
 
 class AjaxController
 {
@@ -43,21 +44,22 @@ class AjaxController
             if(strlen($date) !== 4){
                 $month = absint(substr($date,0,2));
                 $year = absint(substr($date,3,4));
-                $filter_event_by_month = new CalendarBuilder($month,$year,$id);
-                $filter_event_by_month->get_calendar_month();
+                $filter_event_by_month = new MonthCalendarBuilder($month,$year,$id);
+                $filter_event_by_month->getCalendarMonth();
             }
         }
         else{
             $month = absint(substr($date,0,2));
             $year = absint(substr($date,6,4));
-            $filter_event = new CalendarBuilder($month,$year,$id);
             /* week view */
             if(isset($_POST['week'])){
-                $filter_event->get_calendar_week();
+	            $filter_event_by_week = new CalendarBuilder($month,$year,$id);
+	            $filter_event_by_week->getCalendarWeek();
             }
             /* day view */
             else{
-                $filter_event->get_calendar_day();
+	            $filter_event_by_day = new CalendarBuilder($month,$year,$id);
+	            $filter_event_by_day->getCalendarDay();
             }
         }
         wp_die();
@@ -75,17 +77,18 @@ class AjaxController
 
         $month = absint(date("m"));
         $year = absint(date("Y"));
-        $view_type = new CalendarBuilder($month,$year,$id);
-
         switch ($type){
             case 'day':
-                $view_type->get_calendar_day();
+                $view_type = new CalendarBuilder($month,$year,$id);
+                $view_type->getCalendarDay();
                 break;
             case 'month':
-                $view_type->get_calendar_month();
+                $view_type = new MonthCalendarBuilder($month,$year,$id);
+                $view_type->getCalendarMonth();
                 break;
             case 'week':
-                $view_type->get_calendar_week();
+                $view_type = new CalendarBuilder($month,$year,$id);
+                $view_type->getCalendarWeek();
                 break;
         }
         wp_die();
@@ -126,17 +129,18 @@ class AjaxController
             $year = absint(date("Y"));
         }
 
-        $view_type = new CalendarBuilder($month,$year,$id);
-
         switch ($type){
             case 'day':
-                $view_type->get_calendar_day();
+                $view_type = new CalendarBuilder($month,$year,$id);
+                $view_type->getCalendarDay();
                 break;
             case 'month':
-                $view_type->get_calendar_month();
+                $view_type = new MonthCalendarBuilder($month,$year,$id);
+                $view_type->getCalendarMonth();
                 break;
             case 'week':
-                $view_type->get_calendar_week();
+                $view_type = new CalendarBuilder($month,$year,$id);
+                $view_type->getCalendarWeek();
                 break;
         }
         wp_die();
@@ -153,8 +157,8 @@ class AjaxController
 
         $month = absint(substr($more_events_date,0,2));
         $year = absint(substr($more_events_date,6,4));
-        $filter_day = new CalendarBuilder($month,$year,$id);
-        $filter_day->get_calendar_day();
+        $filter_day = new MonthCalendarBuilder($month,$year,$id);
+        $filter_day->getCalendarDay();
 
         wp_die();
     }
@@ -165,15 +169,13 @@ class AjaxController
             return;
         }
 
-
         $more_events_date = sanitize_text_field($_POST['more_week_events_date']);
         $id = absint($_POST['id']);
-
 
         $month = absint(substr($more_events_date,0,2));
         $year = absint(substr($more_events_date,6,4));
         $filter_day = new CalendarBuilder($month,$year,$id);
-        $filter_day->get_calendar_day();
+        $filter_day->getCalendarDay();
 
         wp_die();
     }
@@ -202,8 +204,8 @@ class AjaxController
         $month = absint(substr($changed_month,0,2));
         $year = absint(substr($changed_month,3,4));
 
-        $filter_day = new CalendarBuilder($month,$year,$id);
-        $filter_day->get_calendar_sidebar();
+        $filter_day = new MonthCalendarBuilder($month,$year,$id);
+        $filter_day->getCalendarSidebar();
 
         wp_die();
     }

@@ -18,7 +18,7 @@ class VenueMetaBoxesController
         add_meta_box(
             'gd_venue_box_id',
             __('Venue', 'gd-calendar'),
-            array(self::class, 'venueBox'),
+            array(__CLASS__, 'venueBox'),
             'gd_venues'
         );
     }

@@ -23,8 +23,16 @@ jQuery( document ).ready(function() {
         error_name = jQuery(".error-name"),
         new_organizer = jQuery("#create_new_organizer"),
         organizer_name = jQuery("#organizer_name"),
+        organizer_email = jQuery("#organizer_email"),
         phone = jQuery("#phone"),
-        error_name_org = jQuery(".error-name-org");
+        error_name_org = jQuery(".error-name-org"),
+        error_email_org = jQuery(".error-email-org");
+
+    /**
+     * @type {RegExp}
+     * For email validation
+     */
+    var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
 
     venue_name.on('blur', function () {
         if(jQuery(this).val() !== "") {
@@ -37,6 +45,13 @@ jQuery( document ).ready(function() {
             error_name_org.addClass('hide');
             return false;
         }
+    });
+
+    organizer_email.on('blur', function () {
+       if(jQuery(this).val() === "" ){
+           error_email_org.addClass('hide');
+           return false;
+       }
     });
 
     /**
@@ -91,6 +106,11 @@ jQuery( document ).ready(function() {
             return false;
         }
 
+        if(organizer_email.val() !== '' && !re.test(organizer_email.val())){
+            error_email_org.removeClass('hide');
+            return false;
+        }
+
         var data = {
             action: 'event_save_organizer',
             nonce: gdCalendarEventAjaxObj.gdNonceSaveOrg,
@@ -129,6 +149,9 @@ jQuery( document ).ready(function() {
         jQuery(".event_back").hide();
         jQuery(".add_new").show();
         jQuery(".event_block_edit").hide();
+        if(!error_email_org.hasClass('hide')){
+            error_email_org.addClass('hide');
+        }
     }
 
     function emptyVenueFields() {

@@ -1,7 +1,7 @@
 <?php
 /**
  * Calendar Day View
- * @var $day
+ * @var $day \GDCalendar\Helpers\Builders\CalendarBuilder
  */
 
 if(isset($_POST['date']) && !empty($_POST['date'])){
@@ -21,7 +21,7 @@ elseif (isset($_POST['more_week_events_date']) && !empty($_POST['more_week_event
     $_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
 }
 else{
-    $_day = $day->get_current_date();
+    $_day = $day->getCurrentDate();
 }
 
 if(isset($_POST['search']) && !empty($_POST['search'])){
@@ -30,8 +30,8 @@ if(isset($_POST['search']) && !empty($_POST['search'])){
 
 $searched_events_id = '';
 if(isset($_GET['search']) && !empty($_GET['search'])){
-    $searched_events_id = array_map('absint', $day->get_searched_event());
-    if(empty($day->get_searched_event())){
+    $searched_events_id = array_map('absint', $day->getSearchedEvent());
+    if($day->getSearchedEvent() == false){
         ?>
         <div class="gd_calendar_message">
             <?php esc_html_e('No results found', 'gd-calendar'); ?>
@@ -40,7 +40,7 @@ if(isset($_GET['search']) && !empty($_GET['search'])){
     }
 }
 
-$hour_events = \GDCalendar\Helpers\CalendarBuilder::get_event_by_hour($_day);
+$hour_events = \GDCalendar\Helpers\Builders\CalendarBuilder::getEventByHour($_day);
 ?>
     <div class="gd_calendar_day_title"><?php echo date('l F j, ', strtotime($_day)); ?><span class="gd_calendar_today"><?php echo date('Y', strtotime($_day)); ?></span></div>
     <div class="gd_calendar_day_box">
@@ -48,7 +48,7 @@ $hour_events = \GDCalendar\Helpers\CalendarBuilder::get_event_by_hour($_day);
         <?php
         $row_count = 0;
 
-            foreach ($day->get_hours() as $hour){
+            foreach ($day->getHours() as $hour){
                 if($hour === '12 PM'){
                     $hour = 'noon';
                 }
@@ -62,22 +62,31 @@ $hour_events = \GDCalendar\Helpers\CalendarBuilder::get_event_by_hour($_day);
                 $searched_events = array();
                 $searched_hour_events = array();
 
-                if(array_key_exists(strtolower($hour), $hour_events)){
-                    if(!empty($searched_events_id)){
-                        $searched_events[strtolower($hour)][] = array_intersect($hour_events[strtolower($hour)], $searched_events_id);
-                        foreach ($searched_events as $key => $value){
-                            foreach ($value as $val){
-                                if(!empty($val)){
-                                    $searched_hour_events[$key] = $val;
-                                }
-                            }
-                        }
-                        $current_hour_events = $searched_hour_events[strtolower($hour)];
-                    }
-                    elseif(!isset($_GET['search']) || empty($_GET['search'])){
-                        $current_hour_events = $hour_events[strtolower($hour)];
-                    }
+                if(isset($hour_events[strtolower($hour)])){
+	                $hour_events_hour = $hour_events[strtolower($hour)];
                 }
+
+                if(array_key_exists(strtolower($hour), $hour_events)){
+	                if(!empty($searched_events_id)){
+		                $searched_events[strtolower($hour)] = array_intersect(array_keys($hour_events_hour), $searched_events_id);
+		                foreach ($searched_events as $searched_key => $searched_event){
+			                foreach ($searched_event as $id){
+				                if(!empty($id)){
+					                foreach ($hour_events_hour as $hour_key => $hour_value) {
+						                if ( $id === $hour_key ) {
+							                $searched_hour_events[$searched_key][$id] = $hour_value;
+						                }
+					                }
+				                }
+			                }
+		                }
+		                $current_hour_events = $searched_hour_events[strtolower($hour)];
+	                }
+                    elseif(!isset($_GET['search']) || empty($_GET['search'])){
+		                $current_hour_events = $hour_events_hour;
+	                }
+                }
+
                 $count = count($current_hour_events);
                 $empty_count = $field_count - $count;
                 if(empty($current_hour_events) || !array_key_exists(strtolower($hour), $hour_events)){
@@ -89,10 +98,16 @@ $hour_events = \GDCalendar\Helpers\CalendarBuilder::get_event_by_hour($_day);
                 }else{
                     $counter = 1;
                     $color = '';
-                    foreach ($current_hour_events as $key => $event_id){
+                    foreach ($current_hour_events as $event_id => $event_dates){
                         $get_event = new \GDCalendar\Models\PostTypes\Event($event_id);
-                        $start_time = substr($get_event->get_start_date(), 11, 8);
-                        $end_time = substr($get_event->get_end_date(), 11, 8);
+	                    $start_time = sanitize_text_field(substr($get_event->get_start_date(), 11, 8));
+	                    $end_time = sanitize_text_field(substr($get_event->get_end_date(), 11, 8));
+
+	                    $start_date = date( (strlen($event_dates[0])>10) ? "m/d/Y h:i a" : "m/d/Y", strtotime( $event_dates[0] ) );
+	                    $end_date = date( (strlen($event_dates[0])>10) ? "m/d/Y h:i a" : "m/d/Y", strtotime( end($event_dates) ) );
+	                    if($end_time != ''){
+		                    $end_date = substr($end_date, 0, -8) . $end_time;
+	                    }
                         $all_day = "";
                         if($start_time == "" || $end_time == ""){
                             $all_day = __('All day','gd-calendar');
@@ -116,8 +131,8 @@ $hour_events = \GDCalendar\Helpers\CalendarBuilder::get_event_by_hour($_day);
                             <td class="gd_calendar_day_hover_box_wrapper">
                                 <div class="gd_calendar_day_hover_box">
                                     <h3><?php echo get_the_title($event_id); ?></h3><p><?php echo $all_day; ?></p>
-                                    <p><?php _e('Starts','gd-calendar'); echo ' ' . $get_event->get_start_date(); ?></p>
-                                    <p><?php _e('Ends','gd-calendar'); echo ' ' . $get_event->get_end_date(); ?></p>
+                                    <p><?php _e('Starts','gd-calendar'); echo ' ' . $start_date; ?></p>
+                                    <p><?php _e('Ends','gd-calendar'); echo ' ' . $end_date; ?></p>
                                 </div>
                             </td>
                             <?php
