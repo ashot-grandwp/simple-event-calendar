@@ -11,7 +11,7 @@ Text Domain: gd-calendar
 Domain Path: /languages
 */
 
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
