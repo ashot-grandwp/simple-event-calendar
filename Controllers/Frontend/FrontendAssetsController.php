@@ -51,7 +51,7 @@ class FrontendAssetsController
                 'filterNonce' => $event_filter,
                 'moreEventsNonce' => $more_events,
                 'changeMonthNonce' => $change_month,
-                'searchNonce' => $search_front
+                'searchNonce' => $search_front,
             )
         );
     }
