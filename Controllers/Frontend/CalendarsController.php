@@ -25,12 +25,9 @@ class CalendarsController
     }
 
     public function show($post_id){
+    	$id = absint($post_id);
         do_action( 'gd_calendar_frontend_css' );
         do_action( 'gd_calendar_frontend_datepicker_css' );
-
-        $id = absint($post_id);
-
-        do_action('gd_calendar_themes',$id);
         do_action('gd_calendar_show_script');
 
         if (isset($_GET['gd_calendar_month_event_filter'])){
@@ -48,7 +45,6 @@ class CalendarsController
 
     public static function sidebarShow($post_id){
         $id = absint($post_id);
-        do_action('gd_calendar_themes',$id);
         do_action('gd_calendar_show_script');
 
         $month = absint(current_time('m'));

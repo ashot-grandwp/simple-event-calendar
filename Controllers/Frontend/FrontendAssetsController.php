@@ -9,24 +9,13 @@ class FrontendAssetsController
     public function __construct() {
         add_action( 'gd_calendar_frontend_css', array( __CLASS__, 'frontendStyles' ) );
         add_action( 'gd_calendar_frontend_datepicker_css', array( __CLASS__, 'datepickerFrontShowStyle' ), 100 );
-        add_action( 'gd_calendar_themes', array( __CLASS__, 'selectTheme'));
         add_action( 'gd_calendar_show_script', array( __CLASS__, 'calendar_show_script'));
     }
 
     public static function frontendStyles(){
         wp_enqueue_style("gdCalendarFrontendCss", \GDCalendar()->pluginUrl() . "/resources/assets/style/frontend.css", false);
         wp_enqueue_style("gdCalendarFrontendMediaCss", \GDCalendar()->pluginUrl() . "/resources/assets/style/frontend_media.css", false);
-    }
-
-    /**
-     * @param $id
-     */
-    public static function selectTheme($id){
-        $calendar = new Calendar($id);
-        $theme = $calendar->get_theme();
-        if($theme == 0) {
-            wp_enqueue_style("gd_calendar_default_theme", \GDCalendar()->pluginUrl() . "/resources/assets/style/default_theme.css", false);
-        }
+	    wp_enqueue_style("gd_calendar_default_theme", \GDCalendar()->pluginUrl() . "/resources/assets/style/default_theme.css", false);
     }
 
     public static function datepickerFrontShowStyle(){

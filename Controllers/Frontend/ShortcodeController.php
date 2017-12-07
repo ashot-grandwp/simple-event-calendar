@@ -27,7 +27,6 @@ class ShortcodeController
         }
 
         do_action( 'gd_calendar_frontend_css', $attrs['id'] );
-        do_action( 'gd_calendar_themes', $attrs['id'] );
 
         if($tag === 'gd_calendar'){
             return $this->initFrontend( $attrs['id'] );
