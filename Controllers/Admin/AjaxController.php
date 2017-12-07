@@ -109,9 +109,7 @@ class AjaxController
             $post_id = wp_insert_post( $post_data );
             $venue = new Venue($post_id);
 
-            $venue->set_address($_POST['address'])
-                ->set_latitude($_POST['latitude'])
-                ->set_longitude($_POST['longitude']);
+            $venue->set_address($_POST['address']);
             $venue->save();
 
             $response = array(

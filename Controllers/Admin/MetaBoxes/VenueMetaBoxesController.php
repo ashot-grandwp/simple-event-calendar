@@ -47,9 +47,7 @@ class VenueMetaBoxesController
         $id = absint($post_id);
         $venue = new Venue($id);
 
-        $venue->set_address($_POST['address'])
-            ->set_latitude($_POST['latitude'])
-            ->set_longitude($_POST['longitude']);
+        $venue->set_address($_POST['address']);
         $venue->save();
     }
 

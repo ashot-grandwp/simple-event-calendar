@@ -64,14 +64,11 @@ jQuery( document ).ready(function() {
             error_name.removeClass('hide');
             return false;
         }
-
         var data = {
             action: 'event_save_venue',
             nonce: gdCalendarEventAjaxObj.gdNonceSave,
             title: venue_name.val(),
             address: jQuery("#address").val(),
-            latitude: jQuery("#latitude").val(),
-            longitude: jQuery("#longitude").val()
         };
         jQuery.ajax({
             url: gdCalendarEventAjaxObj.ajaxUrl,
@@ -157,8 +154,6 @@ jQuery( document ).ready(function() {
     function emptyVenueFields() {
         venue_name.val('');
         jQuery("#address").val('');
-        jQuery("#latitude").val('');
-        jQuery("#longitude").val('');
     }
 
     function emptyOrganizerFields() {

@@ -29,19 +29,20 @@ class CalendarsController
         do_action( 'gd_calendar_frontend_datepicker_css' );
 
         $id = absint($post_id);
+
         do_action('gd_calendar_themes',$id);
         do_action('gd_calendar_show_script');
+
         if (isset($_GET['gd_calendar_month_event_filter'])){
             $selected_month = sanitize_text_field($_GET['gd_calendar_month_event_filter']);
             $month = absint(substr($selected_month,0,2));
             $year = absint(substr($selected_month,3,4));
         }
         else{
-            $month = date('m');
-            $year = date('Y');
+            $month = current_time('m');
+            $year = current_time('Y');
         }
-
-        $builder = new MonthCalendarBuilder($month,$year,$id);
+	    $builder = new MonthCalendarBuilder($month,$year,$id);
         $builder->show();
     }
 
@@ -50,8 +51,8 @@ class CalendarsController
         do_action('gd_calendar_themes',$id);
         do_action('gd_calendar_show_script');
 
-        $month = date('m');
-        $year = date('Y');
+        $month = absint(current_time('m'));
+        $year = absint(current_time('Y'));
 
         $builder = new MonthCalendarBuilder($month, $year, $id);
 

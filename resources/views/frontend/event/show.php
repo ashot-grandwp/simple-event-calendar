@@ -16,10 +16,23 @@
         $calendar_id = '';
         if(isset($_GET['calendar'])) {
 	        $calendar_id = absint( $_GET['calendar'] );
+
+	        if(isset($_COOKIE['calendar_' . $calendar_id])){
+                $cookies = json_decode(stripslashes($_COOKIE['calendar_' . $calendar_id]), true);
+
+		        if(!isset($cookies['last_type']) || !isset($cookies['last_format']) || !isset($cookies['main_url'])){
+			        return;
+		        }
+
+                $last_type = $cookies['last_type'];
+                $last_date = $cookies['last_format'];
+                $main_url = $cookies['main_url'];
+                $full_url = $main_url . '#calendar_' . $calendar_id . '=' . $last_type . '&date=' . $last_date;
+            }
 	        ?>
             <div>
                 <a class="gd_calendar_back_link"
-                   href="<?php echo get_permalink( $calendar_id ); ?>"><?php _e( 'Back to calendar', 'gd-calendar' ); ?></a>
+                   href="<?php echo $full_url; ?>"><?php _e( 'Back to calendar', 'gd-calendar' ); ?></a>
             </div>
 	        <?php
         }

@@ -13,17 +13,22 @@ class AdminController{
 
     public function __construct()
     {
+	    if (!session_id()){
+		    session_start();
+        }
+
         $this->Pages = array('gd_events', 'gd_calendar', 'gd_organizers', 'gd_venues');
         add_action( 'admin_menu', array( $this, 'adminMenu' ) );
         add_filter('admin_head', array($this, 'topBanner'));
-	add_action('admin_init', array( $this, 'delayNotices'), 1);
-
-        add_filter('screen_options_show_screen', array($this, 'remove_screen_options'));
+	    add_action('admin_init', array( $this, 'delayNotices'), 1);
+        add_filter('screen_options_show_screen', array($this, 'removeScreenOptions'));
         add_filter('manage_edit-gd_calendar_columns', array(__CLASS__, 'calendarColumns'));
 	    add_action('load-post-new.php',  array(__CLASS__, 'menuStyle') );
         add_action('manage_gd_calendar_posts_custom_column', array($this, 'calendarColumnsData'), 10, 2);
-        add_action('save_post', array(__CLASS__, 'setDefaultObjectTerms'), 100, 2);
-        new AdminAssetsController();
+        add_action('save_post', array(__CLASS__, 'setDefaultObjectTerms'), 99, 2);
+	    add_action( 'admin_notices', array($this, 'errorMessages'), 100, 2);
+
+	    new AdminAssetsController();
         new MetaBoxesController();
         new ShortcodeController();
     }
@@ -32,7 +37,7 @@ class AdminController{
 		echo '<style>#adminmenu .wp-submenu li.wp-first-item a{color: #fff;font-weight: 600;}</style>';
 	}
 
-    public function remove_screen_options(){
+    public function removeScreenOptions(){
         global $current_screen;
         $type = $current_screen->post_type;
         $page = $current_screen->id;
@@ -43,10 +48,29 @@ class AdminController{
         return false;
     }
 
+    public function errorMessages(){
+	    if ( array_key_exists( 'errors', $_SESSION ) ) {
+	        ?>
+            <div class="error">
+                <p><?php
+                    $errors = $_SESSION['errors'];
+                    if($errors->hasErrors() === false){
+                        foreach ($errors->getErrors() as $error){
+                            echo $error . '</br>';
+                        }
+                    }
+                    ?>
+                </p>
+            </div><?php
+		    unset( $_SESSION['errors'] );
+	    }
+    }
+
     public function topBanner(){
         global $taxnow;
         global $current_screen;
-        $type = $current_screen->post_type;
+
+	    $type = $current_screen->post_type;
         $page = $current_screen->id;
         $base = $current_screen->base;
 

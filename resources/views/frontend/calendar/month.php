@@ -37,7 +37,7 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
     <table class='gd_calendar_table'>
         <tr><?php
             // calendar day of week
-            $currentWeek = $builder->getWeekday();
+            $currentWeek = absint($builder->getWeekday());
 
             foreach($builder->getDaysOfWeek() as $key => $day) {
                 $weekday_color = "";
@@ -49,7 +49,7 @@ $gd_calendar_day_light = 'gd_calendar_day_light';
                 $restOfCurrentDate = substr($builder->getCurrentDate(), 0, 7);
                 $currentWeekFont = "";
                 if ($selectedDate == $restOfCurrentDate){
-                    if($key == $currentWeek) {
+                    if($key === $currentWeek) {
                         $currentWeekFont = "current_week_big_size";
                     }
                 }

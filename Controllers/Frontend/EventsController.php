@@ -36,7 +36,7 @@ class EventsController
     {
         do_action('gd_calendar_frontend_css');
 
-        $id = absint(get_post()->ID);
+	    $id = absint(get_post()->ID);
         $event = new Event($id);
         $event_venue = $event->get_event_venue();
         $venue = new Venue($event_venue);

@@ -16,6 +16,9 @@ class AjaxController
         add_action('wp_ajax_calendar_front', array(__CLASS__, 'calendarFrontendViewByType'));
         add_action('wp_ajax_nopriv_calendar_front', array(__CLASS__, 'calendarFrontendViewByType'));
 
+        add_action('wp_ajax_calendar_load', array(__CLASS__, 'calendarFrontendLoadView'));
+        add_action('wp_ajax_nopriv_calendar_load', array(__CLASS__, 'calendarFrontendLoadView'));
+
         add_action('wp_ajax_search_front', array(__CLASS__, 'calendarFrontendSearch'));
         add_action('wp_ajax_nopriv_search_front', array(__CLASS__, 'calendarFrontendSearch'));
 
@@ -75,23 +78,76 @@ class AjaxController
         $type = $_POST['type'];
         $id = absint($_POST['id']);
 
-        $month = absint(date("m"));
-        $year = absint(date("Y"));
+        if(isset($_POST['cookies']) && !empty($_POST['cookies'])){
+	        $cookies = $_POST['cookies'];
+        }
+        else{
+	        $month = absint(date("m"));
+	        $year = absint(date("Y"));
+        }
+
         switch ($type){
             case 'day':
+	            if(isset($cookies['day']) && !empty($cookies['day'])){
+		            $month = absint(substr($cookies['day'],0,2));
+		            $year = absint(substr($cookies['day'],6,4));
+	            }
                 $view_type = new CalendarBuilder($month,$year,$id);
                 $view_type->getCalendarDay();
                 break;
             case 'month':
+	            if(isset($cookies['month']) && !empty($cookies['month'])){
+		            $month = absint(substr($cookies['month'],0,2));
+		            $year = absint(substr($cookies['month'],3,4));
+	            }
                 $view_type = new MonthCalendarBuilder($month,$year,$id);
                 $view_type->getCalendarMonth();
                 break;
             case 'week':
+	            if(isset($cookies['week']) && !empty($cookies['week'])){
+		            $month = absint(substr($cookies['week'],0,2));
+		            $year = absint(substr($cookies['week'],6,4));
+	            }
                 $view_type = new CalendarBuilder($month,$year,$id);
                 $view_type->getCalendarWeek();
                 break;
         }
         wp_die();
+    }
+
+    public static function calendarFrontendLoadView(){
+    	check_ajax_referer('calendar_load', 'nonce');
+
+	    if(!isset($_POST['type']) || !isset($_POST['id']) || !isset($_POST['format'])){
+		    return;
+	    }
+
+	    $type = $_POST['type'];
+	    $id = absint($_POST['id']);
+	    $date_format = $_POST['format'];
+
+	    switch ($type){
+		    case 'day':
+			    $month = absint(substr($date_format,0,2));
+			    $year = absint(substr($date_format,6,4));
+			    $onload = new CalendarBuilder($month,$year,$id);
+			    $onload->getCalendarDay();
+			    break;
+		    case 'week':
+			    $month = absint(substr($date_format,0,2));
+			    $year = absint(substr($date_format,6,4));
+			    $onload = new CalendarBuilder($month,$year,$id);
+			    $onload->getCalendarWeek();
+			    break;
+		    case 'month':
+			    $month = absint(substr($date_format,0,2));
+			    $year = absint(substr($date_format,3,4));
+	            $onload = new MonthCalendarBuilder($month,$year,$id);
+	            $onload->getCalendarMonth();
+			    break;
+	    }
+
+	    wp_die();
     }
 
     public static function calendarFrontendSearch(){

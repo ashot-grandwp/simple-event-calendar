@@ -200,7 +200,7 @@ button.ui-datepicker-close {
     font-size: 19.2px;
 }
 .ui-widget .ui-widget, .ui-widget button, .ui-widget input, .ui-widget select, .ui-widget textarea {
-    background: #f7921e;
+    background: #7b7b7b;
     color: #7b7b7b;
     font-size: 16px;
     border: none;

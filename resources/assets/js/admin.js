@@ -50,13 +50,15 @@ jQuery( document ).ready(function() {
     jQuery("#all_checkbox_view").change(function () {
         jQuery(".view").prop('checked', jQuery(this).prop("checked"));
     });
+
     jQuery('.view').on('change', function () {
-        if(jQuery(".view").length == jQuery(".view:checked").length) {
-            jQuery("#all_checkbox_view").attr("checked", "checked");
-        } else {
-            jQuery("#all_checkbox_view").removeAttr("checked");
-        }
+        choose_view_all_checked();
     });
+
+    /**
+     * Onload view checked
+     */
+    choose_view_all_checked();
 
     /**
      * Select and checkbox ajax handler
@@ -96,6 +98,14 @@ jQuery( document ).ready(function() {
             all_checkbox_select.attr("checked", "checked");
         } else {
             all_checkbox_select.removeAttr("checked");
+        }
+    }
+
+    function choose_view_all_checked() {
+        if(jQuery(".view").length == jQuery(".view:checked").length) {
+            jQuery("#all_checkbox_view").attr("checked", "checked");
+        } else {
+            jQuery("#all_checkbox_view").removeAttr("checked");
         }
     }
 });

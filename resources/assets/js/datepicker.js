@@ -133,6 +133,7 @@ jQuery(document).ready(function () {
 
     if(jQuery("#all_day").is(':checked')) {
 
+
         start_date.datetimepicker('option',{
             timepicker:false,
         });

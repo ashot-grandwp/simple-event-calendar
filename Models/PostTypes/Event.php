@@ -141,7 +141,7 @@ class Event extends PostTypeModel
     public function set_start_date($start_date)
     {
         if (Validator::validateDate($start_date) == false) {
-            throw new \Exception('Wrong date format given.');
+            throw new \Exception('Wrong start date format given');
         }
         $this->start_date = sanitize_text_field($start_date);
         return $this;
@@ -163,7 +163,7 @@ class Event extends PostTypeModel
     public function set_end_date($end_date)
     {
         if (Validator::validateDate($end_date) == false) {
-            throw new \Exception('Wrong date format given.');
+            throw new \Exception('Wrong end date format given');
         }
         $this->end_date = sanitize_text_field($end_date);
         return $this;
@@ -193,7 +193,7 @@ class Event extends PostTypeModel
     public function set_all_day($all_day)
     {
         if (!empty($all_day) && $all_day != 'all_day') {
-            throw new \Exception('Wrong value given.');
+            throw new \Exception('Wrong all day value given');
         }
         $this->all_day = $all_day;
         return $this;
@@ -216,7 +216,7 @@ class Event extends PostTypeModel
     public function set_repeat($repeat)
     {
         if (!empty($repeat) && $repeat != 'repeat') {
-            throw new \Exception('Wrong value given.');
+            throw new \Exception('Wrong repeat value given');
         }
 
         $this->repeat = $repeat;
@@ -241,7 +241,7 @@ class Event extends PostTypeModel
     public function set_repeat_type($repeat_type)
     {
         if ($repeat_type != 'choose_type' && !array_key_exists($repeat_type, self::$repeat_types)) {
-            throw new \Exception('Wrong selected value given.');
+            throw new \Exception('Wrong repeat type selected');
         }
 
         $this->repeat_type = $repeat_type;
@@ -390,7 +390,7 @@ class Event extends PostTypeModel
     public function set_currency_position($currency_position)
     {
         if ($currency_position !== 'after' && $currency_position !== 'before') {
-            throw new \Exception('Wrong selected value given.');
+            throw new \Exception('Wrong currency position selected');
         }
         $this->currency_position = $currency_position;
         return $this;

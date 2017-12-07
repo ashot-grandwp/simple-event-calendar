@@ -38,8 +38,10 @@ class FrontendAssetsController
         wp_enqueue_script("gdCalendarFront", \GDCalendar()->pluginUrl() . "/resources/assets/js/calendar_front.js", array('jquery'), false, true);
         wp_enqueue_script("gdCalendarResizeSensor", \GDCalendar()->pluginUrl() . "/vendor/cssElementQueries/js/ResizeSensor.js", array('jquery'), false, true);
         wp_enqueue_script("gdCalendarElementQueries", \GDCalendar()->pluginUrl() . "/vendor/cssElementQueries/js/ElementQueries.js", array('jquery'), false, true);
+        wp_enqueue_script("gdCalendarMomentJs", \GDCalendar()->pluginUrl() . "/vendor/momentJS/js/moment.min.js", array('jquery'), false, true);
 
 	    $event_filter = wp_create_nonce('event_filter');
+	    $calendar_load = wp_create_nonce('calendar_load');
         $calendar_front = wp_create_nonce('calendar_front');
 	    $more_events = wp_create_nonce('more_events');
 	    $change_month = wp_create_nonce('change_month');
@@ -47,11 +49,12 @@ class FrontendAssetsController
         wp_localize_script('gdCalendarFront', 'gdCalendarFrontObj',
             array(
                 'ajaxUrl' => \GDCalendar()->ajaxUrl(),
+                'loadNonce' => $calendar_load,
                 'frontNonce' => $calendar_front,
                 'filterNonce' => $event_filter,
                 'moreEventsNonce' => $more_events,
                 'changeMonthNonce' => $change_month,
-                'searchNonce' => $search_front,
+                'searchNonce' => $search_front
             )
         );
     }

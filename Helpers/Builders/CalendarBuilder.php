@@ -57,7 +57,6 @@ class CalendarBuilder
      */
     public function getCurrentDate(){
         if(null === $this->current_date){
-//            $this->current_date = date('Y-m-d');
             $this->current_date = current_time('Y-m-d');
         }
 
@@ -68,7 +67,7 @@ class CalendarBuilder
      * @return int
      */
     public function getWeekday() {
-        return date('w', strtotime($this->getCurrentDate()));
+        return current_time('w', strtotime($this->getCurrentDate()));
     }
 
     /**
@@ -148,7 +147,7 @@ class CalendarBuilder
      * @return false|int
      */
     public function getLastDayOfMonth(){
-        return date('Y-m-t', strtotime($this->year.'-'.$this->month));
+        return current_time('Y-m-t', strtotime($this->year.'-'.$this->month));
     }
 
     /**

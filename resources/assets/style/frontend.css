@@ -368,6 +368,9 @@ button.gd_calendar_year_view:hover, button.gd_calendar_year_view:focus {
     padding-top: 2px;
     width: 100%;
 }
+#gd_calendar{
+    visibility: hidden;
+}
 #gd_calendar_search_icon{
     line-height: 4px;
     position: absolute;

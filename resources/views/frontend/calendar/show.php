@@ -2,10 +2,10 @@
 /**
  * @var $show \GDCalendar\Helpers\Builders\CalendarBuilder
  */
+
     $day = false;
     $week = false;
     $month = false;
-    $year = false;
 
     $id = $show->getPostId();
     $calendar = new \GDCalendar\Models\PostTypes\Calendar($id);
@@ -25,9 +25,6 @@
 			    case 2:
 				    $month = true;
 				    break;
-			    case 3:
-				    $year = true;
-				    break;
 		    }
 	    }
     }
@@ -44,10 +41,7 @@
 
 	    if(true === $month){
 	        $type = 'month';
-		    $show_view = \GDCalendar\Helpers\View::buffer('frontend/calendar/month.php', array(
-		            'builder' => $show,
-                    )
-            );
+		    $show_view = \GDCalendar\Helpers\View::buffer( 'frontend/calendar/month.php', array( 'builder' => $show ) );
 		    $month_active = 'gd_calendar_active_view';
         }
         else{
@@ -57,16 +51,10 @@
 		        $day_active = 'gd_calendar_active_view';
             }
             else{
-	            if( true === $week){
+	            if( true === $week ){
 	                $type = 'week';
 		            $show_view = \GDCalendar\Helpers\View::buffer('frontend/calendar/week.php', array('week' => $show));
 		            $week_active = 'gd_calendar_active_view';
-                }
-                else{
-	                if( true === $year){
-		                $type = 'year';
-		                $show_view = \GDCalendar\Helpers\View::buffer('frontend/calendar/year.php', array('year' => $show));
-                    }
                 }
             }
         }
@@ -88,20 +76,17 @@
                     <input type="hidden" id="post_id" value="<?php echo $id; ?>" />
                 </div>
                 <div class="gd_calendar_event_view_box">
-                    <?php
-                    if(count($views) !== 1 && true === $day){ ?>
-                    <button type="button" data-type="day" id="gd_calendar_day_view" class="gd_calendar_day_view <?php echo $day_active; ?>"><?php _e('Day', 'gd-calendar'); ?></button>
+                    <?php if(count($views) !== 1 && true === $day){ ?>
+                    <button type="button" data-type="day" id="gd_calendar_day_view" class="gd_calendar_day_view <?php /*echo $day_active;*/ ?>"><?php _e('Day', 'gd-calendar'); ?></button>
                     <?php } ?>
                     <?php if(count($views) !== 1 && true === $week){ ?>
-                    <button type="button" data-type="week" id="gd_calendar_week_view" class="gd_calendar_week_view <?php echo $week_active; ?>"><?php _e('Week', 'gd-calendar'); ?></button>
+                    <button type="button" data-type="week" id="gd_calendar_week_view" class="gd_calendar_week_view <?php /*echo $week_active;*/ ?>"><?php _e('Week', 'gd-calendar'); ?></button>
                     <?php } ?>
 	                <?php if(count($views) !== 1 && true === $month){ ?>
-                    <button type="button" data-type="month" id="gd_calendar_month_view" class="gd_calendar_month_view <?php echo $month_active; ?>"><?php _e('Month', 'gd-calendar'); ?></button>
+                    <button type="button" data-type="month" id="gd_calendar_month_view" class="gd_calendar_month_view <?php /*echo $month_active;*/ ?>"><?php _e('Month', 'gd-calendar'); ?></button>
 	                <?php } ?>
-                    <?php if(count($views) !== 1 && true === $year){ ?>
-                        <button type="button" data-type="year" id="gd_calendar_year_view" class="gd_calendar_year_view"><?php _e('Year', 'gd-calendar'); ?></button>
-                    <?php } ?>
                     <input type="hidden" id="type_holder" name="type_holder" value="<?php echo $type; ?>"/>
+                    <input type="hidden" id="view_type" name="view_type" value="<?php echo json_encode($views); ?>"/>
                 </div>
                 <div class="gd_calendar_search_box">
                     <input type="text" name="gd_calendar_search" id="gd_calendar_search" class="gd_calendar_search" placeholder="Search" value="">

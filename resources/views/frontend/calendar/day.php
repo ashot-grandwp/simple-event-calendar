@@ -4,7 +4,17 @@
  * @var $day \GDCalendar\Helpers\Builders\CalendarBuilder
  */
 
-if(isset($_POST['date']) && !empty($_POST['date'])){
+$calendar_id = $day->getPostId();
+
+if(isset($_POST['format']) && !empty($_POST['format'])){
+	$date = sanitize_text_field($_POST['format']);
+	$_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
+}
+elseif (isset($_POST['cookies']['day']) && !empty($_POST['cookies']['day'])){
+    $date = $_POST['cookies']['day'];
+	$_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
+}
+elseif(isset($_POST['date']) && !empty($_POST['date'])){
     $date = sanitize_text_field($_POST['date']);
     $_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
 }
@@ -126,7 +136,7 @@ $hour_events = \GDCalendar\Helpers\Builders\CalendarBuilder::getEventByHour($_da
                             ?>
                             <td colspan="5" class="gd_calendar_hour_event <?php echo $color; ?>" >
                                 <p><?php echo esc_html($start_time) . $all_day ?></p>
-                                <a class="gd_calendar_one_day_hover_link" href="<?php echo get_permalink($event_id); ?>"><?php echo get_the_title($event_id); ?></a>
+                                <a class="gd_calendar_one_day_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . "?calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
                             </td>
                             <td class="gd_calendar_day_hover_box_wrapper">
                                 <div class="gd_calendar_day_hover_box">
@@ -151,7 +161,7 @@ $hour_events = \GDCalendar\Helpers\Builders\CalendarBuilder::getEventByHour($_da
                                 ?>
                                 <td class="gd_calendar_hour_event <?php echo $color; ?>" >
                                     <p><?php echo esc_html($start_time); ?></p>
-                                    <a class="gd_calendar_more_day_hover_link" href="<?php echo get_permalink($event_id); ?>"><?php echo get_the_title($event_id); ?></a>
+                                    <a class="gd_calendar_more_day_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . "?calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
                                     <input class="start_event_hover" type="hidden" value="<?php _e('Starts','gd-calendar'); echo ' ' . $get_event->get_start_date(); ?>">
                                     <input class="end_event_hover" type="hidden" value="<?php _e('Ends','gd-calendar'); echo ' ' . $get_event->get_end_date(); ?>">
                                 </td>

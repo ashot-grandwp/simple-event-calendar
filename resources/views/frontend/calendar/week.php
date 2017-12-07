@@ -13,7 +13,15 @@ if(!empty($views) && $views[0] === 0){
 	$show_day = true;
 }
 
-if(isset($_POST['date']) && !empty($_POST['date'])){
+if(isset($_POST['format']) && !empty($_POST['format'])){
+	$date = sanitize_text_field($_POST['format']);
+	$_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
+}
+elseif (isset($_POST['cookies']['week']) && !empty($_POST['cookies']['week'])){
+	$date = $_POST['cookies']['week'];
+	$_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
+}
+elseif(isset($_POST['date']) && !empty($_POST['date'])){
     $date = sanitize_text_field($_POST['date']);
     $_day = sanitize_text_field(date("Y-m-d", strtotime($date)));
 }
@@ -48,7 +56,7 @@ echo '<h4 class="gd_calendar_week_number">'. __('CW', 'gd-calendar') . $week_num
 ?>
 <table class='gd_calendar_week_table'>
     <tr><?php
-        $currentWeek = $week->getWeekday();
+        $currentWeek = absint($week->getWeekday());
         echo '<th></th>';
         foreach($week->getDaysOfWeek() as $key => $day_name) {
             $weekday_color = "";
@@ -60,8 +68,8 @@ echo '<h4 class="gd_calendar_week_number">'. __('CW', 'gd-calendar') . $week_num
             $day_number = date('d', strtotime($week->getYear()."W". $prepared_week_number . $key));
 
             $currentDayWeekFont = "";
-            if ( $week->getCurrentWeekdayNumber() == $week_number){
-                if($key == $currentWeek) {
+            if ( absint($week->getCurrentWeekdayNumber()) === $week_number){
+                if($key === $currentWeek) {
                     $currentDayWeekFont = "current_day_week";
                 }
             }
@@ -171,7 +179,7 @@ echo '<h4 class="gd_calendar_week_number">'. __('CW', 'gd-calendar') . $week_num
 			                            ?>
                                         <div class="gd_calendar_week_box <?php echo $color; ?>">
                                             <p class="gd_calendar_week_time"><?php echo esc_html($start_time) . $all_day; ?></p>
-                                            <a class="gd_calendar_week_hover_link" href="<?php echo get_permalink($event_id); ?>"><?php echo get_the_title($event_id); ?></a>
+                                            <a class="gd_calendar_week_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . "?calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
                                             <div class="gd_calendar_hover_box">
                                                 <h3><?php echo get_the_title($event_id); ?></h3><span class="gd_calendar_hover_all"><?php echo $all_day; ?></span>
                                                 <p><span class="gd_calendar_hover_date"><?php _e('Starts','gd-calendar'); ?></span><span class="gd_calendar_hover_time">&nbsp;<?php echo $start_date; ?></span></p>
@@ -184,7 +192,7 @@ echo '<h4 class="gd_calendar_week_number">'. __('CW', 'gd-calendar') . $week_num
 	                                    ?>
                                         <div class="gd_calendar_week_box <?php echo $color; ?>">
                                             <p class="gd_calendar_week_time"><?php echo esc_html($start_time) . $all_day; ?></p>
-                                            <a class="gd_calendar_week_hover_link" href="<?php echo get_permalink($event_id); ?>"><?php echo get_the_title($event_id); ?></a>
+                                            <a class="gd_calendar_week_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id); ?>"><?php echo get_the_title($event_id); ?></a>
                                             <div class="gd_calendar_hover_box">
                                                 <h3><?php echo get_the_title($event_id); ?></h3><span class="gd_calendar_hover_all"><?php echo $all_day; ?></span>
                                                 <p><span class="gd_calendar_hover_date"><?php _e('Starts','gd-calendar'); ?></span><span class="gd_calendar_hover_time">&nbsp;<?php echo $start_date; ?></span></p>
