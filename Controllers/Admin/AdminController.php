@@ -145,7 +145,10 @@ class AdminController{
             case 'theme' :
                 $all_themes = Calendar::$themes;
                 $calendar = new Calendar($post_id);
-                _e( $all_themes[$calendar->get_theme()], 'gd-calendar' );
+	            if (array_key_exists($calendar->get_theme(), $all_themes)){
+		            _e( $all_themes[$calendar->get_theme()], 'gd-calendar' );
+	            }
+	            else{ _e( 'Default Theme', 'gd-calendar' ); }
                 break;
             case 'featured_image' :
                 $calendar = new Calendar($post_id);
