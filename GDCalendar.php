@@ -15,7 +15,7 @@ class GDCalendar
      * Version of plugin
      * @var string
      */
-    public $Version = '1.0.2';
+    public $Version = '1.0.3';
 
     /**
      * Instance of AdminController to manage admin

@@ -3,7 +3,7 @@
 Plugin Name: GrandWP Calendar
 Plugin URI: http://grandwp.com
 Description: GrandWP Calendar is a great plugin for adding specialized Calendar.
-Version: 1.0.2
+Version: 1.0.3
 Author: GrandWP
 Author URI: http://grandwp.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -11,7 +11,7 @@ Text Domain: gd-calendar
 Domain Path: /languages
 */
 
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
