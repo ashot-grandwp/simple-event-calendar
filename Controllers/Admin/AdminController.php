@@ -1,6 +1,7 @@
 <?php
 namespace GDCalendar\Controllers\Admin;
 
+use GDCalendar\Core\ErrorHandling\ErrorBag;
 use GDCalendar\Helpers\View;
 use GDCalendar\Models\PostTypes\Calendar;
 
@@ -49,16 +50,14 @@ class AdminController{
     }
 
     public function errorMessages(){
-	    if ( array_key_exists( 'errors', $_SESSION ) ) {
+	    if ( array_key_exists( 'errors', $_SESSION ) && !empty($_SESSION['errors']) ) {
 	        ?>
             <div class="error">
                 <p><?php
                     $errors = $_SESSION['errors'];
-                    if($errors->hasErrors() === false){
-                        foreach ($errors->getErrors() as $error){
+                        foreach ($errors as $error){
                             echo $error . '</br>';
                         }
-                    }
                     ?>
                 </p>
             </div><?php

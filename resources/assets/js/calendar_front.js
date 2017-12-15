@@ -620,11 +620,11 @@ function Calendar_Front(id) {
             }
 
             e.preventDefault();
-            var date    = new Date(jQuery(this).closest(".gd_calendar_day ").attr('rel')),
-                yr      = date.getFullYear(),
-                mnt   = date.getMonth() + 1,
-                month   = mnt < 10 ? '0' + mnt : mnt,
-                day     = date.getDate()  < 10 ? '0' + date.getDate()  : date.getDate(),
+
+            var date = jQuery(this).closest(".gd_calendar_day ").attr('rel'),
+                yr      = date.substr(0, 4),
+                month   = date.substr(5, 2),
+                day     = date.substr(8, 2),
                 more_events_date = month + '/' + day + '/' + yr;
             var data = {
                 action: 'more_events',
@@ -667,11 +667,10 @@ function Calendar_Front(id) {
             }
 
             e.preventDefault();
-            var date    = new Date(jQuery(this).closest(".gd_calendar_week_cell ").attr('rel')),
-                yr      = date.getFullYear(),
-                mnt   = date.getMonth() + 1,
-                month   = mnt < 10 ? '0' + mnt : mnt,
-                day     = date.getDate()  < 10 ? '0' + date.getDate()  : date.getDate(),
+            var date = jQuery(this).closest(".gd_calendar_week_cell ").attr('rel'),
+                yr      = date.substr(0, 4),
+                month   = date.substr(5, 2),
+                day     = date.substr(8, 2),
                 more_week_events_date = month + '/' + day + '/' + yr;
             var data = {
                 action: 'week_more_events',

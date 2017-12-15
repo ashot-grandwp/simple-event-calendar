@@ -9,8 +9,20 @@
 
 <div class="event_view gd_calendar_body">
     <div class="posts_link">
-        <span><?php previous_post_link( '&#10094;%link', '%title', false ); ?></span>
-        <span><?php next_post_link('%link&#10095;'); ?></span>
+	    <?php
+	    if(!empty(get_adjacent_post(false,'',true))){
+		    $prev = get_permalink(get_adjacent_post(false,'',true)) . '?calendar=' . $_GET['calendar'];
+		    $prev_title = get_adjacent_post(false,'',true)->post_title; ?>
+            <span><a href="<?php echo $prev; ?>"><?php echo '&#10094;' . $prev_title; ?></a></span>
+		    <?php
+	    }
+        if(!empty(get_adjacent_post(false,'',false))){
+	        $next = get_permalink(get_adjacent_post(false,'',false)) . '?calendar=' . $_GET['calendar'];
+	        $next_title = get_adjacent_post(false,'',false)->post_title; ?>
+            <span><a href="<?php echo $next; ?>"><?php echo $next_title . '&#10095;'; ?></a></span>
+        <?php
+        }
+        ?>
     </div>
     <?php
         $calendar_id = '';

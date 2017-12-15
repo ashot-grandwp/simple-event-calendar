@@ -1,6 +1,5 @@
     <div class="gd_calendar_review_notice">
         <div class="gd_calendar_first_col">
-            <img src="<?php ?>"/>
         </div>
         <div class="gd_calendar_second_col">
             <div>

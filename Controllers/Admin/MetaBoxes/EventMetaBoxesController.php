@@ -104,18 +104,12 @@ class EventMetaBoxesController
 	    }
 	    catch (\Exception $error) {
 		    $gd_calendar_errors->addError($error->getMessage());
-		    if(!isset($_SESSION['errors'])){
-			    $_SESSION['errors'] = $gd_calendar_errors;
-		    }
 	    }
 	    try{
             $event->set_end_date($_POST['end_date']);
 	    }
 	    catch (\Exception $error){
 		    $gd_calendar_errors->addError($error->getMessage());
-		    if(!isset($_SESSION['errors'])){
-		        $_SESSION['errors'] = $gd_calendar_errors;
-		    }
 	    }
 
         if(isset($_POST['all_day'])) {
@@ -124,9 +118,6 @@ class EventMetaBoxesController
 	        }
 	        catch (\Exception $error){
 		        $gd_calendar_errors->addError($error->getMessage());
-		        if(!isset($_SESSION['errors'])){
-			        $_SESSION['errors'] = $gd_calendar_errors;
-		        }
 	        }
         }
 
@@ -136,9 +127,6 @@ class EventMetaBoxesController
 	        }
 	        catch (\Exception $error){
 		        $gd_calendar_errors->addError($error->getMessage());
-		        if(!isset($_SESSION['errors'])){
-			        $_SESSION['errors'] = $gd_calendar_errors;
-		        }
 	        }
         }
 
@@ -148,9 +136,6 @@ class EventMetaBoxesController
 	        }
 	        catch (\Exception $error){
 		        $gd_calendar_errors->addError($error->getMessage());
-		        if(!isset($_SESSION['errors'])){
-			        $_SESSION['errors'] = $gd_calendar_errors;
-		        }
 	        }
 
             switch($event->get_repeat_type()){
@@ -178,9 +163,6 @@ class EventMetaBoxesController
 	    }
 	    catch (\Exception $error){
 		    $gd_calendar_errors->addError($error->getMessage());
-		    if(!isset($_SESSION['errors'])){
-			    $_SESSION['errors'] = $gd_calendar_errors;
-		    }
 	    }
 
         if (isset($_POST['event_venue']) && $_POST['event_venue'] != 'choose') {
@@ -194,10 +176,12 @@ class EventMetaBoxesController
             $org_array = $_POST["event_organizer"];
         }
 
+	    if(!isset($_SESSION['errors'])){
+		    $_SESSION['errors'] = $gd_calendar_errors->getErrors();
+	    }
+
         $event->set_event_organizer($org_array);
         $event->save();
-
-
 
     }
 }
