@@ -136,7 +136,7 @@ $hour_events = \GDCalendar\Helpers\Builders\CalendarBuilder::getEventByHour($_da
                             ?>
                             <td colspan="5" class="gd_calendar_hour_event <?php echo $color; ?>" >
                                 <p><?php echo esc_html($start_time) . $all_day ?></p>
-                                <a class="gd_calendar_one_day_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . "?calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
+                                <a class="gd_calendar_one_day_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . ((strpos(get_permalink($event_id), '?')) ? '&' : '?') . "calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
                             </td>
                             <td class="gd_calendar_day_hover_box_wrapper">
                                 <div class="gd_calendar_day_hover_box">

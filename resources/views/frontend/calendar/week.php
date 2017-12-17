@@ -179,7 +179,7 @@ echo '<h4 class="gd_calendar_week_number">'. __('CW', 'gd-calendar') . $week_num
 			                            ?>
                                         <div class="gd_calendar_week_box <?php echo $color; ?>">
                                             <p class="gd_calendar_week_time"><?php echo esc_html($start_time) . $all_day; ?></p>
-                                            <a class="gd_calendar_week_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . "?calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
+                                            <a class="gd_calendar_week_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . ((strpos(get_permalink($event_id), '?')) ? '&' : '?') . "calendar=" . $calendar_id; ?>"><?php echo get_the_title($event_id); ?></a>
                                             <div class="gd_calendar_hover_box">
                                                 <h3><?php echo get_the_title($event_id); ?></h3><span class="gd_calendar_hover_all"><?php echo $all_day; ?></span>
                                                 <p><span class="gd_calendar_hover_date"><?php _e('Starts','gd-calendar'); ?></span><span class="gd_calendar_hover_time">&nbsp;<?php echo $start_date; ?></span></p>

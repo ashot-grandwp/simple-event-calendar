@@ -18,7 +18,7 @@ if(strlen($title) > 20){
 <div class="gd_calendar_day_event_<?php echo $event_id . ' ' . $event_background; ?>">
     <span class="gd_calendar_circle <?php echo $circle; ?>"></span>
     <span class="gd_calendar_month_hover_box">
-        <a class="gd_calendar_month_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . "?calendar=" . $calendar_id ; ?>"><?php echo $title; ?></a>
+        <a class="gd_calendar_month_hover_link gd_calendar_event_link" href="<?php echo get_permalink($event_id) . ((strpos(get_permalink($event_id), '?')) ? '&' : '?') . "calendar=" . $calendar_id ; ?>"><?php echo $title; ?></a>
     </span>
     <span class="gd_calendar_start_time"><?php echo $start_time . $all_day; ?></span>
     <div class="gd_calendar_hover_box">

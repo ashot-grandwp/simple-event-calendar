@@ -10,14 +10,17 @@
 <div class="event_view gd_calendar_body">
     <div class="posts_link">
 	    <?php
+	    (strpos(get_permalink(get_adjacent_post(false,'',true)), '?')) ? $chr = '&' : $chr = '?';
+        (isset($_GET['calendar'])) ? $param = $chr . 'calendar=' . $_GET['calendar'] : $param = "";
+
 	    if(!empty(get_adjacent_post(false,'',true))){
-		    $prev = get_permalink(get_adjacent_post(false,'',true)) . '?calendar=' . $_GET['calendar'];
+		    $prev = get_permalink(get_adjacent_post(false,'',true)) . $param;
 		    $prev_title = get_adjacent_post(false,'',true)->post_title; ?>
             <span><a href="<?php echo $prev; ?>"><?php echo '&#10094;' . $prev_title; ?></a></span>
 		    <?php
 	    }
         if(!empty(get_adjacent_post(false,'',false))){
-	        $next = get_permalink(get_adjacent_post(false,'',false)) . '?calendar=' . $_GET['calendar'];
+	        $next = get_permalink(get_adjacent_post(false,'',false)) . $param;
 	        $next_title = get_adjacent_post(false,'',false)->post_title; ?>
             <span><a href="<?php echo $next; ?>"><?php echo $next_title . '&#10095;'; ?></a></span>
         <?php
