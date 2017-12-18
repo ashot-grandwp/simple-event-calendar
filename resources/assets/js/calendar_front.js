@@ -178,7 +178,11 @@ function Calendar_Front(id) {
         cookie_date.calendar_id = calendar_id;
         cookie_date.last_type = date_type;
         cookie_date.last_format = date_format;
-        cookie_date.main_url = '//' + window.location.hostname + window.location.pathname;
+
+        var parser = document.createElement('a');
+        parser.href = window.location.href;
+
+        cookie_date.main_url = parser.origin + parser.pathname + parser.search;
 
         switch (date_type) {
             case 'day':
@@ -475,6 +479,10 @@ function Calendar_Front(id) {
 
         var search = _this.container.find(".gd_calendar_search").val();
         var type = _this.container.find("#type_holder").val();
+
+        if(gd_calendar_get_cookie_date(_this.cookie_name)) {
+            cookie_date = JSON.parse(gd_calendar_get_cookie_date(_this.cookie_name));
+        }
 
         gd_calendar_set_cookie_date(_this.cookie_name, _this.post_id, type, selected_date, 2, cookie_date);
         gd_calendar_set_url(_this.cookie_name, type);
