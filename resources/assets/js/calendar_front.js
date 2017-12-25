@@ -393,7 +393,7 @@ function Calendar_Front(id) {
             changeYear: true,
             beforeShow: function() {
                 setTimeout(function(){
-                    jQuery('.ui-datepicker').css('z-index', 999);
+                    jQuery('.ui-datepicker').css('z-index', 1001);
                 }, 0);
                 jQuery(this).datepicker('widget').removeClass('hide-calendar-month');
                 jQuery(this).datepicker('widget').removeClass('hide-calendar-year');
@@ -421,7 +421,7 @@ function Calendar_Front(id) {
             changeYear: true,
             beforeShow: function() {
                 setTimeout(function(){
-                    jQuery('.ui-datepicker').css('z-index', 999);
+                    jQuery('.ui-datepicker').css('z-index', 1001);
                 }, 0);
                 jQuery(this).datepicker('widget').removeClass('hide-calendar-month');
                 jQuery(this).datepicker('widget').removeClass('hide-calendar-year');
@@ -458,7 +458,7 @@ function Calendar_Front(id) {
 
             beforeShow: function() {
                 setTimeout(function(){
-                    jQuery('.ui-datepicker').css('z-index', 999);
+                    jQuery('.ui-datepicker').css('z-index', 1001);
                 }, 0);
                 jQuery(this).datepicker('widget').removeClass('hide-calendar-year');
                 jQuery(this).datepicker('widget').addClass('hide-calendar-month');
